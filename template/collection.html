@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load ratings %}
+{% block head %}
+  <title> Ftrina - {{collection.name}} - {{shop.name}} </title>
+
+  <link rel='stylesheet' href = '{% static "css/metisMenu.css" %}' />
+  <link rel='stylesheet' href = '{% static "css/mm-vertical.css" %}' />
+
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{{shop.url}}">{{shop.name}}</a></li>
+          <li>{{collection.name}}</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Main Content -->
+    <div style="min-height: 600px" class="container m-t-2">
+      <div class="row">
+
+        <!-- Vertical Menu -->
+        <div class="col-md-3 m-b-1">
+          <div class="title"><span>Menu</span></div>
+          <nav class="sidebar-nav">
+            <ul class="metismenu vertical-menu">
+              <li><a href="{{shop.url}}"><span class="fa fa-fw fa-home"></span> Home</a></li>
+              <li><a href="{% url 'shop_shipping' shop=shop.slug  %}"><span class="fa fa-fw fa-truck"></span> Shipping</a></li>
+              <li><a href="{% url 'shop_location' shop=shop.slug  %}"><span class="fa fa-fw fa-map-marker"></span> Location</a></li>
+              <li class="active">
+                <a class="has-arrow" href="#">
+                  <span class="fa fa-fw fa-sitemap"></span>
+                  Collection
+                </a>
+                <ul aria-expanded="true">
+                  {% for o in shop.collection_set.all %}
+                  <li><a href="{{o.url}}">{{o.name}}</a></li>
+                  {%endfor%}
+                </ul>
+              </li>
+            </ul>
+         </nav>
+        </div>
+        <!-- End Vertical Menu -->
+
+        <div class="clearfix visible-sm visible-xs"></div>
+
+
+        <div class="col-md-9">
+          <!-- collection -->
+          <div class="title"><span>{{collection.name}}</span></div>
+          {% for o in product %}
+          <div class="col-xs-6 col-sm-4 col-lg-3 box-product-outer">
+            <div class="box-product">
+              <div class="img-wrapper">
+                  <a href="{{o.url}}">
+                    <img alt="{{o.name}}" src="{{o.image}}">
+                  </a>
+              </div>
+                <h6 class="text-center" ><a href="{{o.url}}">{{o.name|truncatechars:50}}</a></h6>
+                <div class="price">
+                  <div> {{ o.price }} <span class="pull-right">{{ o.price_currency }}</span> </div>
+                </div>
+                <div>Orders  <span class="pull-right">({{o.orders}})</span></div>
+                <br>
+              <div class="rating">
+                {% for i in o.rating.total|full %}
+                    <i class="fa fa-star"></i>
+                {% endfor %}
+                {% for i in o.rating.total|empty %}
+                    <i class="fa fa-star-o"></i>
+                {% endfor %}
+                <span class="pull-right">({{o.rating.total}} reviews)</span>
+              </div>
+
+            </div>
+          </div>
+          {% endfor %}
+
+          </div>
+          <!-- End category -->
+
+          <div class="clearfix visible-sm visible-xs"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- End Main Content -->
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

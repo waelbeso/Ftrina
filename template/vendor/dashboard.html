@@ -1,0 +1,416 @@
+
+{% extends 'vendor/base.html' %}
+{% load static %}
+
+{% block head %}
+	<title> Ftrina - Dashboard </title>
+{% endblock %}
+
+{% block content %}
+
+				<main class="main-content p-5" role="main">
+					<div class="row">
+						<div class="col-md-6 col-lg-6 col-xl-3 mb-5">
+							<div class="card card-tile card-xs bg-primary bg-gradient text-center">
+								<div class="card-body p-4">
+									<!-- Accepts .invisible: Makes the items. Use this only when you want to have an animation called on it later -->
+									<div class="tile-left">
+										<i class="batch-icon batch-icon-user-alt batch-icon-xxl"></i>
+									</div>
+									<div class="tile-right">
+										<div class="tile-number">{{shop.statistics.customer}}</div>
+										<div class="tile-description">Customers</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-6 col-xl-3 mb-5">
+							<div class="card card-tile card-xs bg-secondary bg-gradient text-center">
+								<div class="card-body p-4">
+									<div class="tile-left">
+										<i class="fa fa-hourglass-end batch-icon-xxl"></i>
+									</div>
+									<div class="tile-right">
+										<div class="tile-number">{{shop.statistics.archived}}</div>
+										<div class="tile-description">Archived Orders</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-6 col-xl-3 mb-5">
+							<div class="card card-tile card-xs bg-primary bg-gradient text-center">
+								<div class="card-body p-4">
+									<div class="tile-left">
+										<i class="fa fa-hourglass batch-icon-xxl"></i>
+									</div>
+									<div class="tile-right">
+										<div class="tile-number">{{shop.statistics.expected}}</div>
+										<div class="tile-description">Expected Orders</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-6 col-xl-3 mb-5">
+							<div class="card card-tile card-xs bg-secondary bg-gradient text-center">
+								<div class="card-body p-4">
+									<div class="tile-left">
+										<i class="fa fa-hourglass-half batch-icon-xxl"></i>
+									</div>
+									<div class="tile-right">
+										<div class="tile-number">{{shop.statistics.new}}</div>
+										<div class="tile-description">New Orders</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-lg-6 col-xl-8 mb-5">
+							<div class="card">
+								<div class="card-header">
+									Sales Overview
+									<div class="header-btn-block">
+										<span class="data-range dropdown">
+											<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-sales-overview-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
+												<i class="batch-icon batch-icon-calendar"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button">
+												<a class="dropdown-item" href="today">Today</a>
+												<a class="dropdown-item" href="month">This Month</a>
+												<a class="dropdown-item active" href="year">This Year</a>
+											</div>
+										</span>
+									</div>
+								</div>
+								<div class="card-body">
+									<div class="card-chart" data-chart-color-1="#07a7e3" data-chart-color-2="#32dac3" data-chart-legend-1="Orders" data-chart-height="281">
+										<canvas id="sales-overview"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-6 col-xl-4 mb-5">
+							<div class="card card-activity card-md">
+								<div class="card-header">
+									New Orders
+								</div>
+								
+								<div class="card-media-list">
+									{%for o in orders %}
+									{%for order in o.order_set.all %}
+									<div class="media clickable" data-qp-link="{% url 'dashboard_orders_new_view' order=o.pk %}">
+										<div class="profile-picture bg-gradient bg-primary has-message float-right d-flex mr-3">
+											<img src="{{order.product.image}}" width="44" height="44">
+										</div>
+										<div class="media-body">
+											<div class="heading mt-1">
+												{{order.product.name}}
+											</div>
+											<div class="subtext">by {{order.owner.get_full_name}}</div>
+										</div>
+									</div>
+									{%endfor%}
+									{%endfor%}
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					<div class="row mb-5">
+						<div class="col-md-12">
+							<div class="card card-activity card-md">
+								<div class="card-header">
+									INVENTORY
+								</div>
+								<div class="card-table table-responsive">
+									<table class="table table-hover align-middle">
+										<thead class="thead-light">
+											<tr>
+												<th colspan="4" >Name</th>
+												<th >Warehouse</th>
+												<th >Quantity</th>
+												<th >Variant</th>
+												<th class="text-right" >Actions</th>
+											</tr>
+										</thead>
+										<div class="card-media-list">
+											<tbody>
+												{%for o in shop.inventory_set.all %}
+												<tr>
+													<td style="vertical-align: middle" colspan="4">{{o.product.name}}</td>
+													<td >{{o.warehouse}}</td>
+													<td >{{o.quantity}}</td>
+													<td >{{o.variant.value}}</td>
+													<td class="text-right" >
+														<div class="email-pager-container">
+															<div class="btn-group" role="group">
+																<a href="{% url 'dashboard_inventory_edit' inventory=o.pk %}"  class="btn btn-link waves-effect waves-light" data-toggle="tooltip" title="Edit">
+																	<i class="batch-icon batch-icon-compose-alt-3"></i>
+																</a>
+															</div>
+														</div>
+													</td>
+												</tr>
+												{%endfor%}
+											</tbody>
+										</div>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mb-4">
+					</div>
+				</main>
+{% endblock %}
+
+{% block foot %}
+
+
+<script type="text/javascript">
+	function qp_chart_sizes(chartID){
+		// Card Chart Sizes
+		var chartWidth = '';
+		var chartHeight = '';
+
+		chartWidth = $(chartID).parent().width();
+
+
+		// Get the chart preset data-height.
+		// If not present, then use the height of closest parent of .card-chart
+		// If .card-body is smaller than the data-height (responsive fix), then use the height of .card-body
+		if(typeof($(chartID).closest('.card-chart').data('chart-height')) === 'undefined'){
+			chartHeight = 281;
+		}else{
+			if(chartWidth < 300){
+				chartHeight = 281;
+			}else{
+				chartHeight = $(chartID).closest('.card-chart').data('chart-height');
+			}
+		}
+
+		var chartSizes = [chartWidth, chartHeight];
+
+		return chartSizes;
+	}
+	function qp_line_chart(chartID, maxHeight){
+		if($(chartID).length){
+			var chartSizes = qp_chart_sizes(chartID);
+			var chartWidth = chartSizes[0];
+			var chartHeight = chartSizes[1];
+
+			if(typeof(maxHeight) === 'undefined'){
+				maxHeight = chartHeight;
+			}
+			if(maxHeight != chartHeight){
+				chartHeight = maxHeight;
+			}
+
+			// If there is a date/range dropdown, then enable a click event
+			// If not, use another trigger
+			var clickedElement = $(chartID).closest('.card').find('.header-btn-block .data-range.dropdown .dropdown-item');
+			var triggeredEvent = 'click';
+
+			if(!clickedElement.length){
+				var clickedElement = $(chartID);
+				var triggeredEvent = 'load';
+			}
+
+			clickedElement.on(triggeredEvent, function(e){
+				e.preventDefault();
+
+				// If default range is not set, then get the range from the clicked element
+				if(triggeredEvent != "load"){
+					var range = $(this).attr('href');
+				}else{
+					// B5B Documentation:
+					// Set the default range if no data/range dropdown is present
+					var range = 'today';
+				}
+
+				// Highlight clicked item as active
+				$(this).siblings().removeClass('active');
+				$(this).addClass('active');
+
+				/* DEMO DATA - START */
+				switch(range){
+					case 'today':
+					// B5B Documentation:
+					// Use Ajax to pull your own data from the database
+					var xAxisLabels = ["1AM", "2AM", "3AM", "4AM", "5AM", "6AM", "7AM", "8AM", "9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM", "9PM", "10PM", "11PM", "12AM"];
+					var orders = {{shop.orders_today}}
+
+
+					// Load the chart after all the data has been set
+					load_chart(range, xAxisLabels,orders);
+					break;
+					case 'month':
+					// B5B Documentation:
+					// Use Ajax to pull your own data from the database
+					var xAxisLabels = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
+					var orders = {{shop.orders_this_month}};
+
+					// Load the chart after all the data has been set
+					load_chart(range, xAxisLabels,orders);
+					break;
+					
+					default:
+					case 'year':
+					// B5B Documentation:
+					// Use Ajax to pull your own data from the database
+					var xAxisLabels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+					var orders = {{shop.orders_this_year}};
+
+					// Load the chart after all the data has been set
+					load_chart(range, xAxisLabels,orders);
+					break;
+				}
+				/* DEMO DATA - END */
+			});
+
+			if(triggeredEvent == 'load'){
+				clickedElement.trigger(triggeredEvent);
+			}else{
+				$(chartID).closest('.card').find('.header-btn-block .data-range.dropdown .dropdown-item.active').trigger(triggeredEvent);
+			}
+
+			function load_chart(range, xAxisLabels, sales, orders){
+				var canvasParent = $(chartID).closest('.card-chart');
+				var color1 = canvasParent.data('chart-color-1');
+
+				var legendLine1 = canvasParent.data('chart-legend-1');
+
+				// B5B Documentation:
+				// Use these settings if it's called from a '.card-sm'
+				// Add more card classes as you wish
+				if(canvasParent.closest('.card').hasClass('card-sm')){
+					color1 = qp_hexToRgbA(color1, 0.7);
+					color2 = qp_hexToRgbA(color2, 0.7);
+					var borderWidth = 0;
+					var pointRadius = 0;
+					var fillLineArea = true;
+					var displayLegend = false;
+					var hoverInterset = false;
+					var xAxisLabelShow = false;
+					var yAxisLabelShow = false;
+
+					chartHeight = 82;
+					canvasParent.closest('.card-body').css({'padding-left' : '0', 'padding-right' : '0'});
+
+					if(!canvasParent.closest('.card-body').next().length && !canvasParent.next().length){
+						canvasParent.closest('.card-body').css({'padding-bottom' : '0', 'position' : 'relative'});
+						canvasParent.css({'position' : 'absolute', 'bottom' : '0'});
+						chartWidth = canvasParent.closest('.card-body').width();
+					}
+				}else{
+					var borderWidth = 2;
+					var pointRadius = 2;
+					var fillLineArea = false;
+					var displayLegend = true;
+					var hoverInterset = true;
+					var xAxisLabelShow = true;
+					var yAxisLabelShow = true;
+				}
+
+				// First remove old chart, then create new one
+				canvasParent.empty();
+
+				$('<canvas>').attr({
+					id: chartID.substring(1)
+				}).css({
+					width: chartWidth + 'px',
+					height: chartHeight + 'px'
+				}).appendTo(canvasParent);
+
+				var ctx = $(chartID);
+
+				var myChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: xAxisLabels,
+						datasets: [{
+							label: legendLine1,
+							backgroundColor: color1,
+							borderColor: color1,
+							borderWidth: borderWidth,
+							pointRadius: pointRadius,
+							data: sales,
+							fill: fillLineArea
+						},]
+					},
+					options: {
+						responsive: false,
+						title:{
+							display: false
+						},
+						tooltips: {
+							mode: 'index',
+							intersect: false,
+						},
+						hover: {
+							mode: 'nearest',
+							intersect: hoverInterset
+						},
+						legend: {
+							display: displayLegend
+						},
+						scales: {
+							xAxes: [{
+								display: xAxisLabelShow,
+								scaleLabel: {
+									display: true,
+									labelString: 'Timeframe (' + range + ')'
+								}
+							}],
+							yAxes: [{
+								display: yAxisLabelShow,
+								scaleLabel: {
+									display: true,
+									labelString: 'Value'
+								}
+							}]
+						}
+					}
+				});
+			}
+		}
+	}
+qp_line_chart('#sales-overview');
+
+	var waitForFinalEvent = (function () {
+		var timers = {};
+		return function (callback, ms, uniqueId) {
+			if (!uniqueId) {
+				uniqueId = 'unique id';
+			}
+			if (timers[uniqueId]) {
+				clearTimeout (timers[uniqueId]);
+			}
+			timers[uniqueId] = setTimeout(callback, ms);
+		};
+	})();
+
+	$(window).resize(function () {
+		waitForFinalEvent(function(){
+			// functions here...
+			qp_line_chart('#sales-overview');
+			qp_line_chart('#database-load');
+
+			qp_bar_chart('#profit-loss');
+
+			// ecommerce-dashboard.html
+			qp_bar_chart('#average-order-value', 'bar', true);
+
+			// ui-charts.html
+			qp_line_chart('#demo-line-chart');
+			qp_bar_chart('#demo-bar-chart');
+			qp_bar_chart('#demo-stacked-chart');
+			qp_bar_chart('#demo-horizontal-chart', 'horizontalBar', true);
+		}, 500, 'thisstringisuniquedemo');
+	});
+</script>
+
+
+{% endblock %}
+
+

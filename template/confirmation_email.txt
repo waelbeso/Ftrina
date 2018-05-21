@@ -1,0 +1,9 @@
+{% load i18n %}{% autoescape off %}
+
+{% trans "Dear " %} {{ member }}
+{% trans "Please go to the following page to confirm your email:" %}
+https://ftrina.com/user/register/confirm/{{ key }}/
+
+{% trans "Thanks for using our network!" %}
+www.ftrina.com
+{% endautoescape %}

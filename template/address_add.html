@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load ratings %}
+{% block head %}
+  <title> Charge </title>
+
+
+{% endblock %}
+
+{% block content %}
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="active">My Profile</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Main Content -->
+    <div style="min-height: 600px" class="container m-t-3">
+      <div class="row">
+        <!-- Account Sidebar -->
+        <div class="col-sm-4 col-md-3 m-b-3">
+          <div class="account-picture"><img src="{% static 'images/demo/user.png' %}" alt="" class="img-circle img-responsive"></div>
+          <h4 class="text-center m-b-3">{{profile}}</h4>
+          <ul class="nav nav-pills nav-stacked">
+            <li role="presentation"><a href="{% url 'profile' %}">My Profile</a></li>
+            <li role="presentation" class="active"><a href="{% url 'address'%}">My Address</a></li>
+            <li role="presentation"><a href="{% url 'history'%}">Order History</a></li>
+            <li role="presentation"><a href="{% url 'change_password'%}">Change Password</a></li>
+          </ul>
+        </div>
+        <!-- End Account Sidebar -->
+
+        <!-- My Profile Content -->
+        <div class="col-sm-8 col-md-9">
+          <div class="title m-b-2"><span>Add Address</span></div>
+          <form action="" method="post" >{% csrf_token %}
+          <div class="row">
+            <ul class="list-group list-group-nav col-sm-12">
+              <li class="list-group-item col-sm-12 ">
+                <div class="form-group col-sm-12">
+                  <label for="firstNameInput">Name (*)</label>
+                  {{form.name}}
+                </div>
+                <p>{{form.name.errors}}</p>
+              </li>
+
+              <li class="list-group-item col-sm-12 ">
+                <div class="form-group col-sm-6">
+                  <label for="cityInput">City (*)</label>
+                  {{form.city}}
+                </div>
+
+                <div class="form-group col-sm-6">
+                  <label for="postInput">Post Code (*)</label>
+                  {{form.zip_code}}
+                </div>
+              </li>
+
+              <li class="list-group-item col-sm-12 ">
+                <div class="form-group col-sm-6">
+                  <label for="countryInput">Country (*)</label>
+                  {{form.country}}
+                </div>
+
+                <div class="form-group col-sm-6">
+                  <label for="regionInput">Region / State (*)</label>
+                  {{form.province}}
+                </div>
+              </li>
+
+              <li class="list-group-item col-sm-12 ">
+                <label for="addressInput">Address (*)</label>
+                {{form.address}}
+              </div>
+            </li>
+          </ul>
+          <button type="submit" class="btn btn-theme pull-right"> Save <i class="fa fa-plus"> </i></button>
+        </div>
+        </form>
+        <!-- End My Profile Content -->
+      </div>
+    </div>
+  </div>
+    <!-- End Main Content -->
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

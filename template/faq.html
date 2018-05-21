@@ -1,0 +1,384 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+  <title>FAQ - Ftrina</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="active">FAQ</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Main Content -->
+    <div class="container m-t-3">
+      <div class="row">
+
+        <div class="col-sm-3">
+          <h4><i class="fa fa-shopping-cart"></i> General </h4>
+        </div>
+        <div class="col-sm-9">
+          <div class="panel-group faq-panel" id="accordion1" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading1">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion1" href="#collaps1" aria-expanded="true" aria-controls="collaps1">
+                    I see different prices with the same title. Why ?
+                  </a>
+                </h4>
+              </div>
+              <div id="collaps1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
+                <div class="panel-body">
+                The same product can be sold by different sellers.
+
+                Sellers can list their offers against a certain product while keeping the price competitive.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading2">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                    What should I consider before placing a new order?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
+                <div class="panel-body">
+                Before placing a new order, bear in mind common factors such as price, quality, warranty and any other after-sale services provided by the sellers.
+
+                We want to ensure your shopping experience is as smooth as possible with minimal errors; therefore, we request you to consider all these factors with care.
+
+
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading3">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                  How do I see product specifications?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading3">
+                <div class="panel-body">
+                Search for the product of your interest and click on it to view the product page.
+
+                Scroll down the page to find the ‘Specification’ tab or click on the floating “Specification” button to view all the product specifications.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading4">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                  How do I remove items from my cart?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading4">
+                <div class="panel-body">
+                You can view your shopping cart by clicking on the ‘CART ICON’ on the top right corner of your web page. 
+
+                On each item in the cart, you will see the ‘Remove’ label in the bottom right corner of the item. Click to remove it from your cart.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading5">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                  How can I unsubscribe myself from your newsletter?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading5">
+                <div class="panel-body">
+                  You have the option to unsubscribe from our newsletter by clicking on the ‘Unsubscribe’ option at the bottom of the email.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <h4><i class="fa fa-money"></i> Payments</h4>
+        </div>
+        <div class="col-sm-9">
+          <div class="panel-group faq-panel" id="accordion2" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading6">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapse6" aria-expanded="true" aria-controls="collapse6">
+                    What should I do if my payment is on hold?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading6">
+                <div class="panel-body">
+                  For security purposes, we would need a scanned copy of any government issued ID to be sent to payments@ftrina.com 
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading7">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapse7" aria-expanded="false" aria-controls="collapse7">
+                    What are the payment options?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse7" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading7">
+                <div class="panel-body">
+                You can choose from the following options to pay for your Ftrina orders:
+
+                Credit / Debit Cards (Visa, MasterCard, and AMEX)
+                Cash on Delivery
+                Alipay or WeChat Pay
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading8">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapse8" aria-expanded="false" aria-controls="collapse8">
+                  What is Cash on Delivery?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse8" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading8">
+                <div class="panel-body">
+                If you do not wish to make an online payment, you can choose to pay in cash when you receive your order.
+
+                The amount specified during checkout is the exact amount that you will have to pay, considering the price of the product as well as shipping and carrier charges.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading9">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapse9" aria-expanded="false" aria-controls="collapse9">
+                  When is payment taken?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse9" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading9">
+                <div class="panel-body">
+                  You will be charged as soon as your order is submitted.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading10">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapse10" aria-expanded="false" aria-controls="collapse10">
+                  Can multiple payment methods be combined for the same order?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse10" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading10">
+                <div class="panel-body">
+                  You can use the available wallet balance along with Cash on Delivery or Credit Card if your wallet amount does not match the entire order value.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading11">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapse11" aria-expanded="false" aria-controls="collapse11">
+                  Why has my payment card been blocked?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse11" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading11">
+                <div class="panel-body">
+                  There could be several reasons for this. It’s best if you contact your issuing bank to check the status and resolve such issues. We unfortunately would not have any control over this.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading12">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapse12" aria-expanded="false" aria-controls="collapse12">
+                  Why is my payment denied?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse12" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading12">
+                <div class="panel-body">
+                  There can be several reasons for a card payment to be denied.
+                  For debit cards, the reason is almost always due to insufficient funds.
+
+                  For failed credit card payments, it might be due to outstanding payments or insufficient credit.
+                  Kindly contact your issuing bank to find out the reason for any unsuccessful payment attempts.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <h4><i class="fa fa-user"></i> My Account</h4>
+        </div>
+        <div class="col-sm-9">
+          <div class="panel-group faq-panel" id="accordion3" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading17">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion3" href="#collapse17" aria-expanded="true" aria-controls="collapse17">
+                    How can I create a Ftrina account?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse17" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading17">
+                <div class="panel-body">
+                Getting started with us is easy.
+                Click on our Sign Up page. Fill in the required fields - we'll need your name, email address and desired password (minimum length of password is 8 characters).
+                Click ‘Create Account’.
+                That’s it! You're now part of the Ftrina family!
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading18">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion3" href="#collapse18" aria-expanded="true" aria-controls="collapse18">
+                    Can I create multiple accounts?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse18" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading18">
+                <div class="panel-body">
+                  Yes. However, you will have to use a different email address for each account that you create.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading19">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion3" href="#collapse19" aria-expanded="true" aria-controls="collapse19">
+                    How do I change my password?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse19" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading19">
+                <div class="panel-body">
+                  Visit 'My Profile'. Click on 'Change' next to your password.
+                  Once you change your password, you will receive an email confirmation for the same.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading20">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion3" href="#collapse20" aria-expanded="true" aria-controls="collapse20">
+                    Where can I view all my saved addresses?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse20" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading20">
+                <div class="panel-body">
+                  Under 'My Profile', click on 'Addresses’ to view all your saved addresses.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <h4><i class="fa fa-shopping-bag"></i> Order Status</h4>
+        </div>
+        <div class="col-sm-9">
+          <div class="panel-group faq-panel" id="accordion5" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading27">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion5" href="#collapse27" aria-expanded="true" aria-controls="collapse27">
+                    Is there a minimum order value?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse27" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading27">
+                <div class="panel-body">
+                  The same product can be sold by different sellers with different minimum order.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading28">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion5" href="#collapse28" aria-expanded="true" aria-controls="collapse28">
+                    What is the wish list?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse28" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading28">
+                <div class="panel-body">
+                  Like an item but want to save it for later? Ftrina provides you with an option to add products to your wish list, which will be viewed from the cart. You can add items to your wish list by clicking on the “Add to Wish list” link on a product description page. You can move items later from your wish list to the cart and vice versa.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading29">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion5" href="#collapse29" aria-expanded="true" aria-controls="collapse29">
+                    Can I change my delivery details after I have placed an order?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse29" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading29">
+                <div class="panel-body">
+                  Unfortunately, you’re unable to change the delivery address of an order once it’s confirmed.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <h4><i class="fa fa-truck"></i> Shipping</h4>
+        </div>
+        <div class="col-sm-9">
+          <div class="panel-group faq-panel" id="accordion6" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading30">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion6" href="#collapse30" aria-expanded="true" aria-controls="collapse30">
+                    How do I know the status of my order?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse30" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading30">
+                <div class="panel-body">
+                Once you’ve placed an order, you’ll be notified as your order progresses.
+                To check the status of your product, log in to your account and click on the 'Orders' tab.
+
+                You’ll be able to see the status of each product here. Clicking on a product will also give you detailed information about the status of the product.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="heading31">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion6" href="#collapse31" aria-expanded="true" aria-controls="collapse31">
+                    Sellers do not/cannot ship to my area. Why?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse31" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading31">
+                <div class="panel-body">
+                   The same product can be sold by different sellers and different sellers ship to different areas.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content -->
+{% endblock %}

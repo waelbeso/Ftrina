@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load ratings %}
+{% block head %}
+  <title> {{shop.name}} - Shipping </title>
+
+  <link rel='stylesheet' href = '{% static "css/metisMenu.css" %}' />
+  <link rel='stylesheet' href = '{% static "css/mm-vertical.css" %}' />
+
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{{shop.url}}">{{shop.name}}</a></li>
+          <li>Shipping</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Main Content -->
+    <div style="min-height: 600px" class="container m-t-2">
+      <div class="row">
+
+        <!-- Vertical Menu -->
+        <div class="col-md-3 m-b-1">
+          <div class="title"><span>Menu</span></div>
+          <nav class="sidebar-nav">
+            <ul class="metismenu vertical-menu">
+              <li><a href="{{shop.url}}"><span class="fa fa-fw fa-home"></span> Home</a></li>
+              <li><a href="{% url 'shop_shipping' shop=shop.slug  %}"><span class="fa fa-fw fa-truck"></span> Shipping </a></li>
+              <li><a href="{% url 'shop_location' shop=shop.slug  %}"><span class="fa fa-fw fa-map-marker"></span> Location</a></li>
+              <li class="active">
+                <a class="has-arrow" href="#">
+                  <span class="fa fa-fw fa-sitemap"></span>
+                  Categories
+                </a>
+                <ul aria-expanded="true">
+                  {% for o in shop.categories %}
+                  <li><a href="{{o.url}}">{{o.name}}</a></li>
+                  {%endfor%}
+                </ul>
+              </li>
+            </ul>
+         </nav>
+        </div>
+        <!-- End Vertical Menu -->
+
+        <!-- My Profile Content -->
+        <div class="col-sm-8 col-md-9">
+          {%for o in model %}
+          
+          <div class="title m-b-2"><span>Shipping price</span></div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <td>Country</td>
+                      <td>Province</td>
+                      <td>Price</td>
+                      <td>Currency</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {%for zone in o.zone %}
+                    <tr>
+                      <td>{{zone.country}}</td>
+                      <td>{{zone.province}}</td>
+                      <td>{{zone.price}}</td>
+                      <td>{{zone.price_currency}}</td>
+                    </tr>
+                    {%endfor%}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          {%endfor%}
+        </div>
+        <!-- End My Profile Content -->
+
+      </div>
+
+    </div>
+    <!-- End Main Content -->
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

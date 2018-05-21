@@ -1,0 +1,7 @@
+{% load i18n %}{% autoescape off %}
+
+{% trans "Dear " %} {{ member }}
+{% trans "Your Ftrina verification code is:" %}
+{{ key }}
+
+{% endautoescape %}

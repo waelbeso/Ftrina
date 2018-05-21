@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+  <title>Cookie use - Ftrina</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="active">Cookie</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Main Content -->
+    <div class="container m-t-3">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="title"><span>Cookie use</span></div>
+
+<p><b>Ftrina</b>, use technologies like cookies (small files stored on your browser), web beacons, or unique device identifiers to identify your computer or device so we can deliver a better experience. Our systems also log information like your browser, operating system and IP address. We also may collect personally identifiable information that you provide to us, such as your name, address, phone number or email address. With your permission, we may also access other PII on your device, such as your phone book, calendar or messages, in order to provide services to you. If authorized by you,</p>
+
+
+<p><b>Ftrina use cookies to help:</b></p>
+
+
+<p>Identify and disable the accounts of spammers</p>
+<p>Recover your account if you ever lose access to it</p>
+<p>Provide extra security features like login notifications and login approvals</p>
+<p>Prevent people who are underage from signing up with a false birth date</p>
+<p>Identify public computers so that we can discourage people from using Keep me logged in and putting their account at risk</p>
+
+<p>We also set cookies if you don’t have a Ftrina account, but have visited Ftrina.com, to help us protect Ftrina Services and the people who use it from malicious activity. For example, these cookies help us detect and prevent denial-of-service attacks and the mass creation of fake accounts.</p>
+
+<p>If you have cookies on your browser or device, we read that cookie when you visit our site also.</p>
+          
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content -->
+{% endblock %}

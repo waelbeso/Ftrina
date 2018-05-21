@@ -1,0 +1,287 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    {% block head %}
+
+    {% endblock %}
+
+
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&amp;subset=latin-ext" rel="stylesheet">
+
+	<!-- CSS - REQUIRED - START -->
+	<!-- Batch Icons -->
+	<link rel="stylesheet" href='{% static "vendor/fonts/batch-icons/css/batch-icons.css"%}'>
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href='{% static "vendor/css/bootstrap/bootstrap.min.css"%}'>
+	<!-- Material Design Bootstrap -->
+	<link rel="stylesheet" href='{% static "vendor/css/bootstrap/mdb.min.css"%}'>
+	<!-- Custom Scrollbar -->
+	<link rel="stylesheet" href='{% static "vendor/plugins/custom-scrollbar/jquery.mCustomScrollbar.min.css"%}'>
+	<!-- Hamburger Menu -->
+	<link rel="stylesheet" href='{% static "vendor/css/hamburgers/hamburgers.css"%}'>
+	<!-- CSS - OPTIONAL - START -->
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href='{% static "vendor/fonts/font-awesome/css/font-awesome.min.css"%}'>
+	<!-- JVMaps -->
+	<link rel="stylesheet" href='{% static "vendor/plugins/jvmaps/jqvmap.min.css"%}'>
+	<!-- CSS - OPTIONAL - END -->
+
+	<!-- QuillPro Styles -->
+	<link rel="stylesheet" href='{% static "vendor/css/quillpro/quillpro.css"%}'>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<nav id="sidebar" class="px-0 bg-dark bg-gradient sidebar">
+				<ul class="nav nav-pills flex-column">
+					<li class="logo-nav-item " style="background: #fff; height: 80px; padding-top: 5px; box-shadow: 0 2px 23px 0 rgba(0, 0, 0, 0.1), 0 2px 49px 0 rgba(0, 0, 0, 0.06);">
+						<a href="{% url 'home' %}"><img class="img-responsive logo-ftrina-vendor" alt="Logo" src="{% static 'images/logo.svg' %}" class="img-responsive" data-text-logo="Ftrina" /></a>
+					</li>
+					<li>
+						<h6 class="nav-header">Menu</h6>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link {{d_link}}" href="{% url 'dashboard' %}">
+							<i class="batch-icon batch-icon-browser-alt"></i>
+							Dashboard <span class="sr-only">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link nav-parent" href="#">
+							<i class="batch-icon batch-icon-layout-content-left"></i>
+							listing
+						</a>
+						<ul class="nav nav-pills flex-column">
+							<li class="nav-item">
+								<a class="nav-link {{p_link}}" href="{% url 'dashboard_products' %}">
+									<i class="batch-icon batch-icon-section"></i>
+								Products</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{w_link}} " href="{% url 'dashboard_warehouse' %}">
+									<i class="batch-icon batch-icon-anchor"></i>
+								Warehouse</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{c_link}}" href="{% url 'dashboard_collection' %}">
+									<i class="batch-icon batch-icon-attachment-alt"></i>
+								Collections</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{b_link}}" href="{% url 'dashboard_branches' %}">
+									<i class="batch-icon batch-icon-split"></i>
+								Branch</a>
+							</li>
+						</ul>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link nav-parent" href="#">
+							<i class="batch-icon batch-icon-store"></i>
+							Store
+						</a>
+						<ul class="nav nav-pills flex-column">
+							<li class="nav-item">
+								<a class="nav-link {{f_link}} " href="{% url 'dashboard_information' %}">
+									<i class="batch-icon batch-icon-spam-alt"></i>
+								Information</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{co_link}}" href="{% url 'dashboard_contacts' %}">
+									<i class="batch-icon batch-icon-users"></i>
+								Contact</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{v_link}} " href="{% url 'dashboard_visuals' %}">
+									<i class="batch-icon batch-icon-quill"></i>
+								Visual</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{s_link}} " href="{% url 'dashboard_setting' %}">
+									<i class="batch-icon batch-icon-settings"></i>
+								Setting</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{in_link}} " href="{% url 'dashboard_inventory' %}">
+									<i class="fa fa-cubes batch-icon-settings"></i>
+								Inventory</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link nav-parent" href="#">
+							<i class="batch-icon batch-icon-tag-alt-2"></i>
+							Orders
+						</a>
+						<ul class="nav nav-pills flex-column">
+							<li class="nav-item">
+								<a class="nav-link {{o_n_link}} " href="{% url 'dashboard_orders_new' %}">
+									<i class="fa fa-hourglass-half"></i>
+								New</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{o_a_link}} " href="{% url 'dashboard_orders_archivd' %}">
+									<i class="fa fa-hourglass-end"></i>
+								Archived</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{o_e_link}} " href="{% url 'dashboard_orders_expected' %}">
+									<i class="fa fa-hourglass"></i>
+								expected</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link nav-parent" href="#">
+							<i class="batch-icon batch-icon-transfer"></i>
+							Balance
+						</a>
+						<ul class="nav nav-pills flex-column">
+							<li class="nav-item">
+								<a class="nav-link {{o_n_link}} " href="{% url 'dashboard_orders_new' %}">
+									<i class="batch-icon batch-icon-outgoing"></i>
+								Payouts</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{o_a_link}} " href="{% url 'dashboard_orders_archivd' %}">
+									<i class="batch-icon batch-icon-paper-roll"></i>
+								Transactions</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{o_e_link}} " href="{% url 'dashboard_orders_expected' %}">
+									<i class="batch-icon batch-icon-settings"></i>
+								Settings</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link nav-parent" href="#">
+							<i class="fa batch-icon fa-truck"></i>
+							Shipping
+						</a>
+						<ul class="nav nav-pills flex-column">
+							<li class="nav-item">
+								<a class="nav-link {{Sh_a_link}} " href="{% url 'dashboard_shipping' %}">
+									<i class="batch-icon batch-icon-user-card"></i>
+								Accounts</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{Sh_l_link}} " href="{% url 'dashboard_shipping_labels' %}">
+									<i class="batch-icon batch-icon-stamp-alt"></i>
+								Labels</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link {{Sh_s_link}} " href="{% url 'dashboard_shipping_settings' %}">
+									<i class="batch-icon batch-icon-settings"></i>
+								Settings</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link {{c_link}} " href="{%url 'dashboard_customers' %}">
+							<i class="batch-icon batch-icon-users"></i>
+							Customers
+						</a>
+					</li>
+				</ul>
+			</nav>
+			<div class="right-column">
+				<nav class="navbar navbar-expand-lg navbar-light bg-white" style="height: 80px">
+					<a href="{% url 'home' %}">
+						<img alt="Logo" src="{% static 'images/logo.svg' %}" class="navbar-brand d-block d-sm-block d-md-block d-lg-none" data-text-logo="Ftrina" />
+					</a>
+					<button class="hamburger hamburger--slider" type="button" data-target=".sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle Sidebar">
+						<span class="hamburger-box">
+							<span class="hamburger-inner"></span>
+						</span>
+					</button>
+					<!-- Added Mobile-Only Menu -->
+
+
+					<!--  DEPRECATED CODE:
+						<div class="navbar-collapse" id="navbarSupportedContent">
+					-->
+					<!-- USE THIS CODE Instead of the Commented Code Above -->
+					<!-- .collapse added to the element -->
+					<div class="collapse navbar-collapse" id="navbar-header-content">
+						<ul class="navbar-nav navbar-language-translation mr-auto">
+							<li class="nav-item dropdown">
+							</li>
+						</ul>
+						<ul class="navbar-nav ml-5 navbar-profile">
+							<li class="nav-item"> <a class="btn btn-link waves-effect waves-light" href="{% url 'home' %}"><i class="fa fa-arrow-left"></i> Back </a></li>
+						</ul>
+					</div>
+				</nav>
+
+
+{% block content %}
+
+{% endblock %}
+
+
+			</div>
+		</div>
+	</div>
+
+	<!-- SCRIPTS - REQUIRED START -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<!-- Bootstrap core JavaScript -->
+	<!-- JQuery -->
+	<script type="text/javascript" src='{% static "vendor/js/jquery/jquery-3.1.1.min.js"%}'></script>
+	<!-- Popper.js - Bootstrap tooltips -->
+	<script type="text/javascript" src='{% static "vendor/js/bootstrap/popper.min.js"%}'></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src='{% static "vendor/js/bootstrap/bootstrap.min.js"%}'></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src='{% static "vendor/js/bootstrap/mdb.min.js"%}'></script>
+	<!-- Velocity -->
+	<script type="text/javascript" src='{% static "vendor/plugins/velocity/velocity.min.js"%}'></script>
+	<script type="text/javascript" src='{% static "vendor/plugins/velocity/velocity.ui.min.js"%}'></script>
+	<!-- Custom Scrollbar -->
+	<script type="text/javascript" src='{% static "vendor/plugins/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"%}'></script>
+	<!-- jQuery Visible -->
+	<script type="text/javascript" src='{% static "vendor/plugins/jquery_visible/jquery.visible.min.js"%}'></script>
+	<!-- jQuery Visible -->
+	<script type="text/javascript" src='{% static "vendor/plugins/jquery_visible/jquery.visible.min.js"%}'></script>
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script type="text/javascript" src='{% static "vendor/js/misc/ie10-viewport-bug-workaround.js"%}'></script>
+
+	<!-- SCRIPTS - REQUIRED END -->
+
+	<!-- SCRIPTS - OPTIONAL START -->
+	<!-- ChartJS -->
+	<script type="text/javascript" src='{% static "vendor/plugins/chartjs/chart.bundle.min.js"%}'></script>
+	<!-- JVMaps -->
+	<script type="text/javascript" src='{% static "vendor/plugins/jvmaps/jquery.vmap.min.js"%}'></script>
+	<script type="text/javascript" src='{% static "vendor/plugins/jvmaps/maps/jquery.vmap.usa.js"%}'></script>
+	<!-- Image Placeholder -->
+	<script type="text/javascript" src='{% static "vendor/js/misc/holder.min.js"%}'></script>
+	<!-- SCRIPTS - OPTIONAL END -->
+
+	<!-- QuillPro Scripts -->
+	<script type="text/javascript" src='{% static "vendor/js/scripts.js"%}'></script> 
+	<!-- Form Validation -->
+
+
+
+{% block foot %}
+
+{% endblock %}
+	
+</body>
+</html>

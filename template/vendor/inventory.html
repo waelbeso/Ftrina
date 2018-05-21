@@ -1,0 +1,108 @@
+
+{% extends 'vendor/base.html' %}
+{% load static %}
+
+{% block head %}
+	<title> Ftrina - Dashboard - Inventory </title>
+{% endblock %}
+
+{% block content %}
+
+				<main class="main-content p-5" role="main">
+					<div class="row">
+						<div class="col-md-12">
+							<h1>Inventory</h1>
+						</div>
+					</div>
+					<div class="row mb-5">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<code>Your Inventory</code>
+									<div class="progress">
+										<div class="progress-bar progress-bar-sm bg-gradient" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+									</div>
+									<div class="header-btn-block">
+									</div>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-lg-12 pb-5">
+											<div class="table-responsive">
+												<table id="datatable-1" class="table table-striped table-hover">
+													<thead>
+														<tr>
+															<th colspan="4" >Name</th>
+															<th >Warehouse</th>
+															<th >Quantity</th>
+															<th >Variant</th>
+															<th class="text-right" >Actions</th>
+														</tr>
+													</thead>
+													<tbody>
+														{% for o in inventory %}
+														<tr>
+															<td style="vertical-align: middle" colspan="4">{{o.product.name}}</td>
+															<td >{{o.warehouse}}</td>
+															<td >{{o.quantity}}</td>
+															<td >
+																{%for o in o.variant.all%}
+																<small>{{o.name}}: <code>{{o.value}}</code>  </small> -
+																{%endfor%}
+
+															</td>
+															<td class="text-right" >
+																<div class="email-pager-container">
+																	<div class="btn-group" role="group">
+																		<a href="{% url 'dashboard_inventory_edit' inventory=o.pk %}"  class="btn btn-link waves-effect waves-light" data-toggle="tooltip" title="Edit">
+																			<i class="batch-icon batch-icon-compose-alt-3"></i>
+																		</a>
+																		<a href="{% url 'dashboard_inventory_delete' inventory=o.pk %}"  class="btn btn-link waves-effect waves-light" data-toggle="tooltip" title="Delete">
+																			<i class="batch-icon batch-icon-bin-alt-2"></i>
+																		</a>
+																	</div>
+																</div>
+															</td>
+														</tr>
+														{%endfor%}
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+						            <div class="col-xs-12">
+						              <nav aria-label="Page navigation">
+						                {% if inventory.has_other_pages %}
+						                  <ul class="pagination">
+						                    {% if inventory.has_previous %}
+						                      <li ><a class="page-link" href="?page={{ inventory.previous_page_number }}">&laquo;</a></li>
+						                    {% else %}
+						                      <li class="paginate_button page-item previous disabled" id="datatable-1_previous"><span class="page-link" >&laquo;</span></li>
+						                    {% endif %}
+						                    {% for i in inventory.paginator.page_range %}
+						                      {% if inventory.number == i %}
+						                        <li class="paginate_button page-item active"><span class="page-link" >{{ i }} <span class="sr-only">(current)</span></span></li>
+						                      {% else %}
+						                        <li class="paginate_button page-item active page-link" ><a  href="?page={{ i }}">{{ i }}</a></li>
+						                      {% endif %}
+						                    {% endfor %}
+						                    {% if inventory.has_next %}
+						                      <li class="paginate_button page-item next page-link " ><a href="?page={{ inventory.next_page_number }}">&raquo;</a></li>
+						                    {% else %}
+						                      <li class="paginate_button page-item previous disabled " ><span class="page-link" >&raquo;</span></li>
+						                    {% endif %}
+						                  </ul>
+						                {% endif %}
+						              </nav>
+						            </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+{% endblock %}
+
+
+
+
+

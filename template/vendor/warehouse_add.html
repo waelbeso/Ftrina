@@ -1,0 +1,63 @@
+
+{% extends 'vendor/base.html' %}
+{% load static %}
+{% load static %}
+{% load leaflet_tags %}
+
+{% block head %}
+	<title> Ftrina - Dashboard - Add Warehouse </title>
+	{% leaflet_js %}
+	{% leaflet_css %} 
+
+   {% leaflet_js plugins="forms" %}
+   {% leaflet_css plugins="forms" %}
+
+{% endblock %}
+
+{% block content %}
+
+				<main class="main-content p-5" role="main">
+					<div class="row">
+						<div class="col-md-12">
+							<h1>Warehouse</h1>
+						</div>
+					</div>
+					<div class="row mb-5">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<code>Add Warehouse Information</code>
+									<div class="progress">
+										<div class="progress-bar progress-bar-sm bg-gradient" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+									</div>
+									<div class="header-btn-block">
+										<a href="{%url 'dashboard_warehouse' %}" class="btn btn-success waves-effect waves-light">
+											<i class="fa fa-arrow-left"></i> 
+											Back
+										</a>
+									</div>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-lg-12">
+											<form action="" method="post" >{% csrf_token %}
+												<div class="form-group">
+													{{form}}
+												</div>
+												<button type="submit" class="btn btn-danger" >Save</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+{% endblock %}
+
+
+
+
+
+
+

@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load ratings %}
+
+{% load leaflet_tags %}
+{% block head %}
+  <title> {{shop.name}} - Location </title>
+
+  <link rel='stylesheet' href = '{% static "css/metisMenu.css" %}' />
+  <link rel='stylesheet' href = '{% static "css/mm-vertical.css" %}' />
+<!--[if IE 8]><script src="{% static "leaflet/eventlister.ie8.js" %}"></script><!--<![endif]-->
+<!--[if lt IE 8]><script src="{% static "leaflet/eventlister.ie6-7.js" %}"></script><!--<![endif]-->
+
+  {% leaflet_js %}
+  {% leaflet_css %}
+<style>
+
+    .leaflet-container {  /* all maps */
+        width:  100%;
+        height: 500px;
+    }
+    #specialbigmap {
+        height: 800px;
+    }
+    
+</style>
+
+
+
+<script type="text/javascript">
+    window.addEventListener("map:init", function (e) {
+        var detail = e.detail;
+        console.log(detail);
+        detail.map.setView([ {{shop.geom.get_y}} , {{shop.geom.get_x}} ], 13);
+        L.marker([ {{shop.geom.get_y}} , {{shop.geom.get_x}} ]).addTo(detail.map)
+        .bindPopup( '<b>{{shop.name}}</b>: {{shop.address}}' )
+        .openPopup();
+    }, false);
+</script>
+
+
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{{shop.url}}">{{shop.name}}</a></li>
+          <li>Location</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+
+    <!-- Main Content -->
+    <div class="container m-t-2">
+      <div class="row">
+
+        <!-- Vertical Menu -->
+        <div class="col-md-3 m-b-1">
+          <div class="title"><span>Menu</span></div>
+          <nav class="sidebar-nav">
+            <ul class="metismenu vertical-menu">
+              <li><a href="{{shop.url}}"><span class="fa fa-fw fa-home"></span> Home</a></li>
+              <li><a href="{% url 'shop_shipping' shop=shop.slug  %}"><span class="fa fa-fw fa-truck"></span> Shipping </a></li>
+              <li><a href="{% url 'shop_location' shop=shop.slug  %}"><span class="fa fa-fw fa-map-marker"></span> Location</a></li>
+              <li class="active">
+                <a class="has-arrow" href="#">
+                  <span class="fa fa-fw fa-sitemap"></span>
+                  Categories
+                </a>
+                <ul aria-expanded="true">
+                  {% for o in shop.categories %}
+                  <li><a href="{{o.url}}">{{o.name}}</a></li>
+                  {%endfor%}
+                </ul>
+              </li>
+            </ul>
+         </nav>
+        </div>
+        <!-- End Vertical Menu -->
+
+        <!-- Map Content -->
+        <div class="col-sm-8 col-md-9">
+          
+          <div class="title m-b-2"><span>Location</span></div>
+          {% leaflet_map name="map" settings_overrides="" %}
+
+        </div>
+        <!-- End Map Content -->
+
+      </div>
+
+    </div>
+    <!-- End Main Content -->
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,47 @@
+
+
+
+.btn-ftrina {
+	margin: 6px 0;
+
+    -webkit-transition: all 0.225s ease-in-out;
+    -moz-transition: all 0.225s ease-in-out;
+    -o-transition: all 0.225s ease-in-out;
+    transition: all 0.225s ease-in-out;
+    box-shadow: none !important;
+
+    background: none;
+    border: none;
+    font-size: 15px;
+    padding: 5px;
+    color: #164818;
+}
+.fileinput-cancel-button, .fileinput-remove-button{
+display: none !important;
+}
+
+.ftrina-thumbnails{
+    width: 400px;
+}
+.couriers{
+    float: left;
+}
+.couriers span {
+    width: 100px !important;
+    height: 100px !important;
+    display: inline-block;
+    background-size: 80px;
+    float: left;
+}
+.couriers p {
+    font-size: 20px;
+    text-align: center;
+    display: inline-block;
+    margin-top: 25px;
+}
+
+/*
+.logo-ftrina-vendor{
+  width: 100px;
+}
+*/

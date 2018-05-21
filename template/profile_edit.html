@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n static %}
+{% load ratings %}
+{% block head %}
+  <title> Charge </title>
+
+
+{% endblock %}
+
+{% block content %}
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="active">My Profile</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Main Content -->
+    <div style="min-height: 600px" class="container m-t-3">
+      <div class="row">
+
+        <!-- Account Sidebar -->
+        <div class="col-sm-4 col-md-3 m-b-3">
+          <div class="account-picture"><img src="{% static 'images/demo/user.png' %}" alt="" class="img-circle img-responsive"></div>
+          <h4 class="text-center m-b-3">{{profile}}</h4>
+          <ul class="nav nav-pills nav-stacked">
+            <li role="presentation" class="active"><a href="{% url 'profile'%}">My Profile</a></li>
+            <li role="presentation"><a href="{% url 'address'%}">My Address</a></li>
+            <li role="presentation"><a href="{% url 'history'%}">Order History</a></li>
+            <li role="presentation"><a href="{% url 'change_password'%}">Change Password</a></li>
+          </ul>
+        </div>
+        <!-- End Account Sidebar -->
+
+        <!-- My Profile Content -->
+        <div class="col-sm-8 col-md-9">
+          <div class="title m-b-2"><span>My Profile</span></div>
+          <p class="text-center">{{error}}</p>
+          <div class="row">
+            <div class="col-xs-12">
+              <form method="post">{% csrf_token %}
+                <ul class="list-group list-group-nav col-sm-12">
+                  <li class="list-group-item col-sm-12 ">
+                    <div class="form-group col-sm-12">
+                      <label for="countryInput">First Name (*)</label>
+                      {{form.first_name}}
+                    </div>
+                  </li>
+                  <li class="list-group-item col-sm-12">
+                    <div class="form-group col-sm-12">
+                      <label for="countryInput">Last Name (*)</label>
+                      {{form.last_name}}
+                    </div>
+                  </li>
+                  <li class="list-group-item col-sm-12 ">
+                    <div class="form-group col-sm-12">
+                      <label for="countryInput">Email Address (*)</label>
+                      {{form.email}}
+                    </div>
+                  </li>
+                  <li class="list-group-item col-sm-12 ">
+                    <div class="form-group col-sm-6">
+                      <label for="countryInput">Country Code (*)</label>
+                      {{form.country_code}}
+                    </div>
+                    <div class="form-group col-sm-6">
+                      <label for="countryInput">Phone Number (*)</label>
+                      {{form.mobile}}
+                    </div>
+                  </li>
+                </ul>
+              <input type="submit" value="{% trans 'save' %}" class="btn btn-theme pull-right" />
+            </form>
+            </div>
+          </div>
+        </div>
+        <!-- End My Profile Content -->
+
+      </div>
+    </div>
+    <!-- End Main Content -->
+
+
+
+
+{% endblock %}
+
+
+
+
+              <form method="post">{% csrf_token %}
+                <ul class="list-group list-group-nav">
+                  <li class="list-group-item">
+                    <div class="form-group col-sm-12">
+                      <label for="countryInput">First Name (*)</label>
+                      {{form.first_name}}
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="form-group col-sm-12">
+                      <label for="countryInput">Last Name (*)</label>
+                      {{form.last_name}}
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="form-group col-sm-12">
+                      <label for="countryInput">Email Address (*)</label>
+                      {{form.email}}
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="form-group col-sm-6">
+                      <label for="countryInput">Country Code (*)</label>
+                      {{form.country_code}}
+                    </div>
+                    <div class="form-group col-sm-6">
+                      <label for="countryInput">Phone Number (*)</label>
+                      {{form.mobile}}
+                    </div>
+                  </li>
+                </ul>
+              <input type="submit" value="{% trans 'save' %}" class="btn btn-theme pull-right" />
+            </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

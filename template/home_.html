@@ -1,0 +1,442 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+	<title>Ftrina - Home</title>
+{% endblock %}
+
+
+{% block jumbotron %}
+    <!-- Full Slider -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="owl-carousel owl-theme home-slider">
+          <a href="products.html"><div class="item owl-cover" data-xs-height="220px" data-sm-height="350px" data-md-height="400px" data-lg-height="430px" data-src="{% static 'images/demo/slide-1-full.jpg' %}"></div></a>
+
+          <a href="products.html"><div class="item owl-cover" data-xs-height="220px" data-sm-height="350px" data-md-height="400px" data-lg-height="430px" data-src="{% static 'images/demo/slide-2-full.jpg' %}"></div></a>
+
+          <a href="products.html"><div class="item owl-cover" data-xs-height="220px" data-sm-height="350px" data-md-height="400px" data-lg-height="430px" data-src="{% static 'images/demo/slide-3-full.jpg' %}"></div></a>
+
+        </div>
+      </div>
+    </div>
+    <!-- End Full Slider -->
+{% endblock %}
+
+{% block content %}
+    <div class="container m-t-2">
+      <div class="row">
+
+        <!-- New Arrivals & Best Selling -->
+        <div class="col-md-3 m-b-1">
+          <div class="title"><span><a href="products.html">New Remakers <i class="fa fa-chevron-circle-right"></i></a></span></div>
+          <div class="widget-slider owl-carousel owl-theme owl-controls-top-offset m-b-2">
+            <div class="box-product-outer">
+              <div class="box-product">
+                <div class="img-wrapper">
+                  <a href="#">
+                    <img alt="Product" src="{% static 'images/remakers/1.jpg' %}">
+
+                  </a>
+                  <div class="tags tags-left">
+                    <span class="label-tags"><a href="products.html"><span class="label label-success arrowed-right">New designer</span></a></span>
+                  </div>
+                  <div class="option">
+                    <a href="#" data-toggle="tooltip" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-align-left"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Wishlist" class="wishlist"><i class="fa fa-heart"></i></a>
+                  </div>
+                </div>
+                <h6><a href="#">Sissi Zhau</a></h6>
+              </div>
+            </div>
+            <div class="box-product-outer">
+              <div class="box-product">
+                <div class="img-wrapper">
+                  <a href="#">
+                    <img alt="Product" src="{% static 'images/remakers/2.jpg' %}">
+                  </a>
+                  <div class="tags tags-left">
+                    <span class="label-tags"><a href="products.html"><span class="label label-success arrowed-right">New designer</span></a></span>
+                  </div>
+                  <div class="option">
+                    <a href="#" data-toggle="tooltip" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-align-left"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Wishlist" class="wishlist"><i class="fa fa-heart"></i></a>
+                  </div>
+                </div>
+                <h6><a href="#">Ted wang</a></h6>
+              </div>
+            </div>
+            <div class="box-product-outer">
+              <div class="box-product">
+                <div class="img-wrapper">
+                  <a href="#">
+                    <img alt="Product" src="{% static 'images/remakers/3.jpg' %}">
+                  </a>
+                  <div class="tags tags-left">
+                    <span class="label-tags"><a href="products.html"><span class="label label-success arrowed-right">New designer</span></a></span>
+                  </div>
+                  <div class="option">
+                    <a href="#" data-toggle="tooltip" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-align-left"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Wishlist" class="wishlist"><i class="fa fa-heart"></i></a>
+                  </div>
+                </div>
+                <h6><a href="#">Frank Fort</a></h6>
+              </div>
+            </div>
+          </div>
+          <div class="title"><span><a href="products.html">Selling Trends<i class="fa fa-chevron-circle-right"></i></a></span></div>
+          <div class="widget-slider owl-carousel owl-theme owl-controls-top-offset">
+            <div class="box-product-outer">
+              <div class="box-product">
+                <div class="img-wrapper">
+                  <a href="#">
+                    <img alt="Product" src="{% static 'images/demo/polo4.jpg' %}">
+                  </a>
+                  <div class="tags tags-left">
+                    <span class="label-tags"><span class="label label-primary arrowed-right">Popular</span></span>
+                    <span class="label-tags"><span class="label label-default arrowed-right">Top Week</span></span>
+                  </div>
+                  <div class="option">
+                    <a href="#" data-toggle="tooltip" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-align-left"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Wishlist" class="wishlist"><i class="fa fa-heart"></i></a>
+                  </div>
+                </div>
+                <h6><a href="#">IncultAcid Wash Raglan Crew Neck T-Shirt</a></h6>
+                <div class="price">
+                  <div>$13.50 <span class="label-tags"><span class="label label-danger arrowed">-10%</span></span></div>
+                  <span class="price-old">$15.00</span>
+                </div>
+                <div class="rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                  <a href="#">(5 reviews)</a>
+                </div>
+              </div>
+            </div>
+            <div class="box-product-outer">
+              <div class="box-product">
+                <div class="img-wrapper">
+                  <a href="#">
+                    <img alt="Product" src="{% static 'images/demo/polo3.jpg' %}">
+                  </a>
+                  <div class="tags tags-left">
+                    <span class="label-tags"><span class="label label-primary arrowed-right">Popular</span></span>
+                    <span class="label-tags"><span class="label label-default arrowed-right">Top Week</span></span>
+                  </div>
+                  <div class="option">
+                    <a href="#" data-toggle="tooltip" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-align-left"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Wishlist" class="wishlist"><i class="fa fa-heart"></i></a>
+                  </div>
+                </div>
+                <h6><a href="#">Avoir EnvieOlive Printed Round Neck T-Shirt</a></h6>
+                <div class="price">
+                  <div>$13.50 <span class="label-tags"><span class="label label-danger arrowed">-10%</span></span></div>
+                  <span class="price-old">$15.00</span>
+                </div>
+                <div class="rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                  <a href="#">(5 reviews)</a>
+                </div>
+              </div>
+            </div>
+            <div class="box-product-outer">
+              <div class="box-product">
+                <div class="img-wrapper">
+                  <a href="#">
+                    <img alt="Product" src="{% static 'images/demo/polo2.jpg' %}">
+                  </a>
+                  <div class="tags tags-left">
+                    <span class="label-tags"><span class="label label-primary arrowed-right">Popular</span></span>
+                    <span class="label-tags"><span class="label label-default arrowed-right">Top Week</span></span>
+                  </div>
+                  <div class="option">
+                    <a href="#" data-toggle="tooltip" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-align-left"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Wishlist" class="wishlist"><i class="fa fa-heart"></i></a>
+                  </div>
+                </div>
+                <h6><a href="#">ElaboradoBrown Printed Round Neck T-Shirt</a></h6>
+                <div class="price">
+                  <div>$13.50 <span class="label-tags"><span class="label label-danger arrowed">-10%</span></span></div>
+                  <span class="price-old">$15.00</span>
+                </div>
+                <div class="rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                  <a href="#">(5 reviews)</a>
+                </div>
+              </div>
+            </div>
+            <div class="box-product-outer">
+              <div class="box-product">
+                <div class="img-wrapper">
+                  <a href="#">
+                    <img alt="Product" src="{% static 'images/demo/polo1.jpg' %}">
+                  </a>
+                  <div class="tags tags-left">
+                    <span class="label-tags"><span class="label label-primary arrowed-right">Popular</span></span>
+                    <span class="label-tags"><span class="label label-default arrowed-right">Top Week</span></span>
+                  </div>
+                  <div class="option">
+                    <a href="#" data-toggle="tooltip" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-align-left"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Wishlist" class="wishlist"><i class="fa fa-heart"></i></a>
+                  </div>
+                </div>
+                <h6><a href="#">Levi'sNavy Blue Printed Round Neck T-Shirt</a></h6>
+                <div class="price">
+                  <div>$13.50 <span class="label-tags"><span class="label label-danger arrowed">-10%</span></span></div>
+                  <span class="price-old">$15.00</span>
+                </div>
+                <div class="rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                  <a href="#">(5 reviews)</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End New Arrivals & Best Selling -->
+
+        <div class="clearfix visible-sm visible-xs"></div>
+
+        <div class="col-md-9">
+
+          <!-- Featured -->
+          <div class="title"><span>Featured Products</span></div>
+          <div class="col-xs-6 col-sm-4 col-lg-3 box-product-outer">
+            <div class="box-product">
+              <div class="img-wrapper">
+                <a href="#">
+                  <img alt="Product" src="{% static 'images/demo/polo1.jpg' %}">
+                </a>
+                <div class="tags">
+                  <span class="label-tags"><span class="label label-default arrowed">Featured</span></span>
+                </div>
+                <div class="tags tags-left">
+                  <span class="label-tags"><span class="label label-danger arrowed-right">Sale</span></span>
+                </div>
+                <div class="option">
+                  <a href="#" data-toggle="tooltip" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                  <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-align-left"></i></a>
+                  <a href="#" data-toggle="tooltip" title="Add to Wishlist" class="wishlist"><i class="fa fa-heart"></i></a>
+                </div>
+              </div>
+              <h6><a href="#">IncultGeo Print Polo T-Shirt</a></h6>
+              <div class="price">
+                <div>$13.50 <span class="label-tags"><span class="label label-default">-10%</span></span></div>
+                <span class="price-old">$15.00</span>
+              </div>
+              <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <a href="#">(5 reviews)</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-lg-3 box-product-outer">
+            <div class="box-product">
+              <div class="img-wrapper">
+                <a href="#">
+                  <img alt="Product" src="{% static 'images/demo/polo3.jpg' %}">
+                </a>
+                <div class="tags">
+                  <span class="label-tags"><span class="label label-default arrowed">Featured</span></span>
+                </div>
+                <div class="tags tags-left">
+                  <span class="label-tags"><span class="label label-success arrowed-right">Sale</span></span>
+                </div>
+                <div class="option">
+                  <a href="#" data-toggle="tooltip" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                  <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-align-left"></i></a>
+                  <a href="#" data-toggle="tooltip" title="Add to Wishlist" class="wishlist"><i class="fa fa-heart"></i></a>
+                </div>
+              </div>
+              <h6><a href="#">Tommy HilfigerNavy Blue Printed Polo T-Shirt</a></h6>
+              <div class="price">
+                <div>$13.50 <span class="label-tags"><span class="label label-primary">-10%</span></span></div>
+                <span class="price-old">$15.00</span>
+              </div>
+              <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <a href="#">(5 reviews)</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-lg-3 box-product-outer">
+            <div class="box-product">
+              <div class="img-wrapper">
+                <a href="#">
+                  <img alt="Product" src="{% static 'images/demo/polo2.jpg' %}">
+                </a>
+                <div class="tags">
+                  <span class="label-tags"><span class="label label-default arrowed">Featured</span></span>
+                </div>
+                <div class="tags tags-left">
+                  <span class="label-tags"><span class="label label-primary arrowed-right">Sale</span></span>
+                </div>
+                <div class="option">
+                  <a href="#" data-toggle="tooltip" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                  <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-align-left"></i></a>
+                  <a href="#" data-toggle="tooltip" title="Add to Wishlist" class="wishlist"><i class="fa fa-heart"></i></a>
+                </div>
+              </div>
+              <h6><a href="#">WranglerNavy Blue Solid Polo T-Shirt</a></h6>
+              <div class="price">
+                <div>$13.50 <span class="label-tags"><span class="label label-success">-10%</span></span></div>
+                <span class="price-old">$15.00</span>
+              </div>
+              <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <a href="#">(5 reviews)</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-lg-3 visible-xs visible-lg box-product-outer">
+            <div class="box-product">
+              <div class="img-wrapper">
+                <a href="#">
+                  <img alt="Product" src="{% static 'images/demo/polo4.jpg' %}">
+                </a>
+                <div class="tags">
+                  <span class="label-tags"><span class="label label-default arrowed">Featured</span></span>
+                </div>
+                <div class="tags tags-left">
+                  <span class="label-tags"><span class="label label-danger arrowed-right">Sale</span></span>
+                </div>
+                <div class="option">
+                  <a href="#" data-toggle="tooltip" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                  <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-align-left"></i></a>
+                  <a href="#" data-toggle="tooltip" title="Add to Wishlist" class="wishlist"><i class="fa fa-heart"></i></a>
+                </div>
+              </div>
+              <h6><a href="#">NikeAs Matchup -Pq Grey Polo T-Shirt</a></h6>
+              <div class="price">
+                <div>$13.50 <span class="label-tags"><span class="label label-danger">-10%</span></span></div>
+                <span class="price-old">$15.00</span>
+              </div>
+              <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <a href="#">(5 reviews)</a>
+              </div>
+            </div>
+          </div>
+          <!-- End Featured -->
+
+          <div class="clearfix visible-sm visible-xs"></div>
+
+          <div class="title m-t-2"><span>News & Event </span></div>
+            <div class="row">
+              <div class="col-xs-6 col-sm-6">
+                <a href="products.html" class="thumbnail"><img src="{% static 'images/demo/kitchen_ad_1.jpg' %}" alt=""></a>
+              </div>
+                <div class="col-xs-6 col-sm-6">
+                  <a href="products.html" class="thumbnail"><img src="{% static 'images/demo/kitchen_ad_2.jpg' %}" alt=""></a>
+                </div>
+            </div>
+
+          <div class="clearfix visible-sm visible-xs"></div>
+
+          <!-- Start ponsored -->
+
+          <div class="clearfix visible-sm visible-xs"></div>
+
+          <div class="title m-t-2"><span>Sponsored</span></div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12">
+                <a href="products.html" class="thumbnail"><img src="{% static 'images/demo/en_cat-module-19.png' %}" alt=""></a>
+              </div>
+            </div>
+
+          <div class="clearfix visible-sm visible-xs"></div>
+          <!-- End ponsored -->
+        </div>
+
+      </div>
+
+      <!-- Brand & Clients -->
+      <div class="row">
+        <div class="col-xs-12 m-t-1">
+          <div class="title text-center"><span>Brand & Clients</span></div>
+          <div class="brand-slider owl-carousel owl-theme owl-controls-top-offset">
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand1.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand2.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand3.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand4.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand5.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand1.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand2.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand3.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand4.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand5.png' %}" alt=""></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Brand & Clients -->
+
+    </div>
+    <!-- End Main Content -->
+{% endblock %}
+
+
+
+
+
+
+

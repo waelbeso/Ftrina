@@ -1,0 +1,95 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+  <title> {{ categorie }} - Ftrina - Blog </title>
+{% endblock %}
+
+
+{% block content %}
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="active">Blog</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Main Content -->
+    <div class="container m-t-3">
+      <div class="row">
+
+        <!-- Content -->
+        <div class="col-sm-8">
+          <div class="title m-b-2"><span>{{ categorie }}</span></div>
+          <div class="row">
+
+          {% for o in articles %}
+            <div class="col-md-6">
+              <div class="thumbnail blog-list">
+                <a href="{% url 'blog_detail' categorie=o.category.name pk=o.id %}"><img src="{{ o.image }}" alt="{{ o.title }}"></a>
+                <div class="caption">
+                  <h4>{{o.title}}</h4>
+                  <small>
+                    <span><i class="fa fa-clock-o"></i> {{ o.date }} </span>
+                    <span><i class="fa fa-user"></i> <a href="">Ftrina</a></span>
+                  </small>
+                  <p>{{ o.description }}</p>
+                  <div class="text-right"><a href="{% url 'blog_detail' categorie=o.category.name pk=o.id %}" class="btn btn-theme btn-sm"><i class="fa fa-long-arrow-right"></i> Read More</a></div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            
+            <div class="col-xs-12 text-center">
+              <nav aria-label="Page navigation">
+                {% if articles.has_other_pages %}
+                  <ul class="pagination">
+                    {% if users.has_previous %}
+                      <li><a href="?page={{ articles.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in articles.paginator.page_range %}
+                      {% if articles.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                      {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if articles.has_next %}
+                      <li><a href="?page={{ articles.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                  </ul>
+                {% endif %}
+              </nav>
+            </div>
+          </div>
+        </div>
+        <!-- End Content -->
+
+        <!-- Blog Sidebar -->
+        <div class="col-sm-4">
+          <div class="title"><span>Categories</span></div>
+
+            <ul class="list-group list-group-nav">
+              {% for o in categories %}
+              <li class="list-group-item">&raquo; <a href="{% url 'blog_categorie' categorie=o.name %}">{{ o.name }}</a></li>
+              {% endfor %}
+            </ul>
+        </div>
+        <!-- End Blog Sidebar -->
+
+      </div>
+    </div>
+    <!-- End Main Content -->
+
+{% endblock %}

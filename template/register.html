@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+    <title>Registration - Ftrina</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="active">Registration</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+
+    <!-- Main Content -->
+    <div style="min-height: 600px" class="container m-t-3">
+      <div class="row">
+        {%if registerForm.errors %}
+        <div class="alert alert-danger" role="alert">
+        {{registerForm.errors}} 
+      </div>
+      {%endif%}
+        
+        <!-- Register Form -->
+        <div class="col-sm-12 login-register-form m-b-3">
+          <div class="title"><span>Create An Account</span></div>
+          <div class="row">
+            <form action="" method="post" >{% csrf_token %}
+              <div class="form-group col-sm-6">
+                <label for="nameInput">User Name</label>
+                {{registerForm.username}}
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="emailInput">Email address</label>
+                {{registerForm.email}}
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="passwordInput">Password</label>
+                {{registerForm.password}}
+              </div>
+
+              <div class="form-group col-sm-6">
+                <label for="passwordConfirmInput">Confirm Password</label>
+                {{registerForm.password_confirm}}
+              </div>
+
+              <div class="form-group col-sm-6">
+                <label for="countryInput">Country Code (*)</label>
+                {{registerForm.country_code}}
+              </div>
+
+              <div class="form-group col-sm-6">
+                <label for="countryInput">Country Code (*)</label>
+                {{registerForm.phone}}
+              </div>
+
+              <div class="col-xs-12">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"><span> I agree with <a href="{% url 'terms' %}"><u>Terms and Conditions.</u></a></span>
+                  </label>
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <button type="submit" class="btn btn-theme"><i class="fa fa-long-arrow-right"></i> Register</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content -->
+
+{% endblock %}

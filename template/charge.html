@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load ratings %}
+{% block head %}
+  <title> Charge </title>
+
+
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li>Done</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+
+
+    <!-- Main Content -->
+    <div style="min-height: 600px" class="container m-t-2">
+      <div class="row">
+        <!-- Checkout Form -->
+        <div class="col-md-12">
+          <div class="title"><span>Charge Done</span></div>
+          <div class="fuelux">
+
+            <div class="alert alert-success text-center" role="alert">
+              <h4>Thank You For Your Order !</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti optio voluptatum obcaecati inventore nobis, odit minima sunt odio amet suscipit!</p>
+                <p class="m-t-2"><a href="{% url 'home' %}" class="btn btn-theme"><i class="fa fa-home"></i> Back to Home</a></p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Checkout Form -->
+  </div>
+</div>
+<!-- End Main Content -->
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,124 @@
+
+{% extends 'vendor/base.html' %}
+{% load static %}
+
+{% block head %}
+	<title> Ftrina - Dashboard - View Order </title>
+{% endblock %}
+
+{% block content %}
+
+				<main class="main-content p-5" role="main">
+					<div class="row">
+						<div class="col-md-12">
+							<h1>View Order</h1>
+						</div>
+					</div>
+					<div class="row mb-5">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<code>View Order</code>
+									<div class="progress">
+										<div class="progress-bar progress-bar-sm bg-gradient" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+									</div>
+									<div class="header-btn-block">
+										<a href="{%url 'dashboard_orders_new' %}" class="btn btn-success waves-effect waves-light">
+											<i class="fa fa-arrow-left"></i> 
+											Back
+										</a>
+									</div>
+								</div>
+
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-6">
+
+										</div>
+										<div class="col-sm-6">
+											<div class="display-3 text-right">
+												Order
+											</div>
+											<div class="invoice-date text-right">
+												<br><br>
+												<strong>Issued Date:</strong> {{invoice.timestamp.date}}<br>
+												<strong>NO #:</strong> {{invoice.reference}} <br>
+											</div>
+										</div>
+									</div>
+									<hr />
+									<div class="row">
+										<div class="col-sm-4">
+											<h3>Bill To:</h3>
+											<address>
+												<strong>{{invoice.buyer.first_name}} {{invoice.buyer.last_name}}</strong><br>
+												{{invoice.buyer.address}}, {{invoice.buyer.city}}<br>
+												{{invoice.buyer.province}}, {{invoice.buyer.country}} {{invoice.buyer.zip_code}}<br>
+												Tel: {{invoice.buyer.mobile}}<br>
+												Email: {{invoice.buyer.email}}<br>
+											</address>
+										</div>
+										<div class="col-sm-4">
+											<h3>Ship To:</h3>
+											<address>
+												<strong>{{invoice.buyer.first_name}} {{invoice.buyer.last_name}}</strong><br>
+												{{invoice.buyer.address}}, {{invoice.buyer.city}}<br>
+												{{invoice.buyer.province}}, {{invoice.buyer.country}} {{invoice.buyer.zip_code}}<br>
+												Tel: {{invoice.buyer.mobile}}<br>
+												Email: {{invoice.buyer.email}}<br>
+											</address>
+										</div>
+										<div class="col-sm-4">
+											<h3 class="text-center">Payment Status</h3>
+											<div class="text-center">
+											{%if invoice.paid %}
+											<button type="button" class="btn btn-success waves-effect waves-light">Paid</button>
+											{%endif %}
+											{%if not invoice.paid %}
+											<button type="button" class="btn btn-danger waves-effect waves-light">Un Paid</button>
+											{%endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+								{% if invoice.buyer.notes %}
+								<div class="row"  style="width: 90%; margin: auto;" >
+									<div class="col-md-12">
+										<div class="alert alert-success">
+											<strong lass="text-center"> Customer Notes: {{invoice.buyer.notes}}</strong>
+										</div>
+									</div>
+								</div>
+								{% endif%}
+								<div class="card-table table-responsive">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th style="width: 20px">#</th>
+												<th>Item Name</th>
+												<th class="text-center">Quantity</th>
+											</tr>
+										</thead>
+										<tbody>
+											{%for o in orders %}
+											<tr>
+												<td>{{ forloop.counter }}</td>
+												<td> <a href="{{o.product.url}}">{{o.product.name}}</a></td>
+												<td class="text-center">{{o.quantity}}</td>
+											</tr>
+											{%endfor%}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+{% endblock %}
+
+
+
+
+
+
+

@@ -1,0 +1,233 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% load ratings %}
+{% block head %}
+	<title> Ftrina - Home</title>
+{% endblock %}
+
+
+{% block jumbotron %}
+    <!-- Full Slider -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="owl-carousel owl-theme home-slider">
+          <a href="products.html"><div class="item owl-cover" data-xs-height="220px" data-sm-height="450px" data-md-height="510px" data-lg-height="530px" data-src="{% static 'images/demo/header-slide-1.svg' %}"></div></a>
+
+          <a href="products.html"><div class="item owl-cover" data-xs-height="220px" data-sm-height="450px" data-md-height="510px" data-lg-height="530px" data-src="{% static 'images/demo/header-slide-2.svg' %}"></div></a>
+
+        </div>
+      </div>
+    </div>
+    <!-- End Full Slider -->
+{% endblock %}
+
+{% block content %}
+
+    <div class="container m-t-2">
+      <div class="row">
+        <!-- Recommended Blog -->
+        <div class="col-md-3 m-b-1">
+          <div class="title"><span><a href="products.html">Recommended Blog <i class="fa fa-chevron-circle-right"></i></a></span></div>
+          <div class="widget-slider owl-carousel owl-theme owl-controls-top-offset m-b-2">
+          {% for o in article %}
+            <div class="box-product-outer">
+              <div class="box-product">
+                <div class="img-wrapper">
+                  <a href="{% url 'blog_detail' categorie=o.category.name pk=o.id %}"><img src="{{ o.image }}" alt="{{ o.title }}"></a> 
+                  <div class="tags tags-left">
+                    <!-- <span class="label-tags"><a href="products.html"><span class="label label-success arrowed-right">Recommended</span></a></span> -->
+                  </div>
+                </div>
+                <div class="caption">
+                  <a href="{% url 'blog_detail' categorie=o.category.name pk=o.id %}"><h4>{{o.title}}</h4></a>
+                  <small>
+                    <span><i class="fa fa-clock-o"></i> {{ o.date }} </span>
+                    <span><i class="fa fa-user"></i> <a href="">Ftrina</a></span>
+                  </small> 
+                  <div class="blog_description" style="margin-bottom:  14px !important;">
+                  <p>{{ o.description }} ... </p>
+                  </div>
+                </div>
+                <button  type="submit" class="btn btn-default subscribe-button  pull-right" type="button">More</button>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="title"><span><a href="products.html">Sponsored <i class="fa fa-chevron-circle-right"></i></a></span></div>
+          <div class="widget-slider owl-carousel owl-theme owl-controls-top-offset">
+            <div class="box-product-outer">
+
+
+            </div>
+          </div>
+        </div>
+        <!-- End Recommended Blog -->
+
+        <div class="clearfix visible-sm visible-xs"></div>
+        <div class="col-md-9">
+          <!-- Featured Stores -->
+          <div class="title"><span>Featured Stores</span></div>
+          {% for o in shops %}
+          <div class="col-xs-6 col-sm-4 col-lg-3 box-product-outer">
+            <div class="box-product">
+              <div class="img-wrapper">
+                <a href="{{o.url}}">
+                  <img alt="{{o.name}}" src="{{o.image}}">
+                </a>
+                <div class="tags tags-left">
+                  {% if o.live %}
+                  <span class="label-tags"><span class="label label-danger arrowed-right">Live</span></span>
+                  {%endif%}
+                </div>
+                <div class="tags tags-right">
+                  {% if not o.live %}
+                  <span class="label-tags"><span class="label label-default arrowed">Closed</span></span>
+                  {%endif%}
+                </div>
+              </div>
+              <h6 class="text-center"><a href="{{o.url}}">{{o.name}}</a></h6>
+              <div>Followers <span class="pull-right">({{o.followers}})</span></div>
+              <div>Orders  <span class="pull-right">({{o.orders}})</span></div>
+              <br>
+              <div class="rating">
+                {% for i in o.rating.total|full %}
+                    <i class="fa fa-star"></i>
+                {% endfor %}
+                {% for i in o.rating.total|empty %}
+                    <i class="fa fa-star-o"></i>
+                {% endfor %}
+                <span class="pull-right">({{o.rating.total}} reviews)</span>
+              </div>
+
+            </div>
+          </div>
+          {% endfor %}
+          <!-- End Featured Stores -->
+
+          <div class="clearfix visible-sm visible-xs"></div>
+            <!--<div class="home_baner"> </div>-->
+          <div class="clearfix visible-sm visible-xs"></div>
+
+          <!-- Featured Products -->
+          <div class="title m-t-2"><span>Featured Products</span></div>
+          <div class="product-slider owl-carousel owl-theme owl-controls-top-offset">
+            {% for o in products %}
+            <div class="box-product-outer">
+              <div class="box-product">
+                <div class="img-wrapper">
+                  <a href="{{o.url}}">
+                    <img alt="Product" src="{{o.image}}">
+                  </a>
+                  <!--
+                  <div class="option">
+                    <a href="{%url 'add_to_cart' product=o.pk %}" data-toggle="tooltip" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                     <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-align-left"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Wishlist" class="wishlist"><i class="fa fa-heart"></i></a>
+                  
+                  </div>
+                  -->
+                </div>
+                <h6 class="text-center" ><a href="{{o.url}}">{{o.name|truncatechars:50}}</a></h6>
+                <div class="price">
+                  <div> {{ o.price }} <span class="pull-right">{{ o.price_currency }}</span> </div>
+                </div>
+                <div>Orders  <span class="pull-right">({{o.orders}})</span></div>
+                <div class="rating">
+                {% for i in o.rating.total|full %}
+                    <i class="fa fa-star"></i>
+                {% endfor %}
+                {% for i in o.rating.total|empty %}
+                    <i class="fa fa-star-o"></i>
+                {% endfor %}
+                  <span class="pull-right">({{o.rating.total}} reviews)</span>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <!-- End Featured Products -->
+
+
+          <!-- New arrival products -->
+          <div class="title m-t-2"><span>New Arrivals</span></div>
+          <div class="product-slider owl-carousel owl-theme owl-controls-top-offset">
+            {% for o in new_arrivals %}
+            <div class="box-product-outer">
+              <div class="box-product">
+                <div class="img-wrapper">
+                  <a href="{{o.url}}">
+                    <img alt="Product" src="{{o.image}}">
+                  </a>
+                  <!--
+                  <div class="option">
+                    <a href="{%url 'add_to_cart' product=o.pk %}" data-toggle="tooltip" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+                     <a href="#" data-toggle="tooltip" title="Add to Compare"><i class="fa fa-align-left"></i></a>
+                    <a href="#" data-toggle="tooltip" title="Add to Wishlist" class="wishlist"><i class="fa fa-heart"></i></a>
+                  
+                  </div>
+                  -->
+                </div>
+                <h6 class="text-center" ><a href="#">{{o.name|truncatechars:50}}</a></h6>
+                <div class="price">
+                  <div> {{ o.price }} <span class="pull-right">{{ o.price_currency }}</span> </div>
+                </div>
+                <div>Orders  <span class="pull-right">({{o.orders}})</span></div>
+                <div class="rating">
+                {% for i in o.rating.total|full %}
+                    <i class="fa fa-star"></i>
+                {% endfor %}
+                {% for i in o.rating.total|empty %}
+                    <i class="fa fa-star-o"></i>
+                {% endfor %}
+                  <span class="pull-right">({{o.rating.total}} reviews)</span>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <!-- End New arrival products -->
+
+
+
+        </div>
+      </div>
+      <!-- Brand & Clients -->
+      <div class="row">
+        <div class="col-xs-12 m-t-1">
+          <div class="title text-center"><span>Friends & Clients</span></div>
+          <div class="brand-slider owl-carousel owl-theme owl-controls-top-offset">
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand1.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand2.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand3.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand4.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand5.png' %}" alt=""></a>
+            </div>
+            <div class="brand">
+              <a href=""><img src="{% static 'images/demo/brand1.png' %}" alt=""></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Brand & Clients -->
+
+    </div>
+    <!-- End Main Content -->
+{% endblock %}
+
+
+
+
+
+
+

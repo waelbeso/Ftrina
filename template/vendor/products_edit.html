@@ -1,0 +1,361 @@
+
+{% extends 'vendor/base.html' %}
+{% load static %}
+
+
+
+{% load cloudinary %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+{% cloudinary_includes %}
+
+{% block head %}
+	<title> Ftrina - Dashboard - Add Product </title>
+	<link rel="stylesheet" href='{% static "vendor/plugins/tagsinput/bootstrap-tagsinput.min.css"%}'>
+
+	<link rel="stylesheet" href='{% static "vendor/plugins/fileinput/css/fileinput.min.css"%}'>
+	<link rel='stylesheet' href = '{% static "css/font-awesome.css" %}' />
+
+	<link href='{% static "vendor/plugins/fileinput/themes/explorer-fa/theme.css"%}' media="all" rel="stylesheet" type="text/css"/>
+
+	<link rel='stylesheet' href = '{% static "vendor/ftrina.css" %}' />
+
+
+{% endblock %}
+
+
+
+
+{% block content %}
+
+				<main class="main-content p-5" role="main">
+					<div class="row">
+						<div class="col-md-12">
+							<h1>Product</h1>
+						</div>
+					</div>
+
+{%if form.errors %}
+<div class="alert alert-danger" role="alert">
+  {{form.errors}}
+</div>
+{%endif%}
+
+
+					<div class="row mb-5">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<code>Basic information</code>
+									<p class="card-text" >Name your prodact and write attractive description</p>
+									<div class="header-btn-block">
+										<a href="{%url 'dashboard_products' %}" class="btn btn-success waves-effect waves-light">
+											<i class="fa fa-arrow-left"></i> 
+											Back
+										</a>
+									</div>
+								</div>
+								<form id="ProductForm" action="" method="post" >{% csrf_token %}
+								<div class="card-body">
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="form-group">
+												<label for="NameInput">Name (*)</label>
+												{{form.name}}
+											</div>
+										</br>
+											<div class="form-group">
+												<label for="keywordInput">Keyword (*)</label>
+												{{form.keyword}}
+											</div>
+										</br>
+											<div class="form-group">
+												<label for="descriptionInput">Cart Description (*)</label>
+												{{form.cart_description}}
+											</div>
+										</br>
+											<div class="form-group">
+												<label for="descriptionInput">Description (*)</label>
+												{{form.description}}
+											</div>
+										</br>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row mb-5">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<code>Product Photo</code>
+									<p class="card-text" >Best image size is  <code>1000px</code> x  <code>1000px</code>   at least one photo is required, don't forget to click on the upload icon <code>(<i class="batch-icon  batch-icon-browser-upload"></i>)</code> after choosing an image</p>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-lg-12">
+											<input id="input-id" class="file" type="file" multiple data-preview-file-type="any" >
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row mb-5">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<code>Product information</code>
+									<p class="card-text" >Simplify your inventory management by entering   <code>SkU</code> and <code>Variant</code></p>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="form-group">
+												<label for="skuInput">SKU <code>'Stock Keeping Unit'</code></label>
+												{{form.sku}}
+											</div>
+										</br>
+											<span class="float-right text-right">
+												<a href="#" id="add-v" class="">Add Variant</a>  
+											</span>
+										</br>
+										</div>
+									</div>
+									<div class="variant-container">
+										<!-- Variant -->
+										{%for  o in variant %}
+										<div class="row variant_row_{{forloop.counter0}}" id="variant_row">
+											<div class="col"> 
+												<label" id="variant_name_label_{{ forloop.counter0 }}">Name (*)</label">
+												<input type="text" value="{{o.name}}" class="form-control" placeholder="name" id="variant_name{{ forloop.counter0 }}">
+											</div>
+											<div class="col"> 
+												<label" id="variant_value_label_{{ forloop.counter0 }}">Value (*)</label">
+												<input type="text" value="{{o.value}}" class="form-control" placeholder="Value" id="variant_value{{ forloop.counter0 }}" data-role="tagsinput">
+											</div>
+										</div>
+										<span class="float-right text-right" id="remove_{{ forloop.counter0 }}">
+											<a href="#" class="remove-v" value="{{ forloop.counter0 }}">Remove</a>
+										</span>
+										<br>
+										{%endfor%}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row mb-5">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<code>Trade Information</code>
+									<p class="card-text" >Enter the product price and choose   <code>Currency</code></p>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+											<label for="exampleFormControlTextarea1">Price (*)</label>
+											{{form.price}}
+										</div>
+										<div class="col">
+											<label for="exampleFormControlTextarea1">Currency (*)</label>
+											{{form.price_currency}}
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="form-group">
+												<label for="exampleFormControlTextarea1">Origin (*)</label>
+												{{form.origin}}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row mb-5">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<code>Shipping Information</code>
+									<p class="card-text" >Enter the product weight by   <code>Gram</code></p>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="form-group">
+												<label for="exampleFormControlTextarea1">Weight (*)</label>
+												{{form.weight}}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+<button type="submit" class="btn btn-danger" >Save</button>
+
+
+
+{%if photo_container%}
+<div  id="uploaded_photo" style="display: none;">
+{%for o in photo_container %}
+<img caption="{{o.caption}}" width="{{o.width}}" id="{{o.id}}" delete="{{o.delete}}" style="width: 200px" src="{{o.url}}">
+{%endfor%}
+</div>
+{%endif%}
+
+
+{{form.variant}}
+{{form.photos}}
+
+</form>
+
+
+
+				</main>
+{% endblock %}
+
+{% block foot %}
+
+
+<script type="text/javascript" src='{% static "vendor/plugins/tagsinput/bootstrap-tagsinput.min.js"%}'></script>
+<script type="text/javascript" src='{% static "vendor/plugins/ckeditor/ckeditor.js"%}'></script>
+<script type="text/javascript" src='{% static "vendor/plugins/ckeditor/adapters/jquery.js"%}'></script> <!-- This jQuery Adapter is REQUIRED for CKEditor to function properly -->
+<script type="text/javascript" src='{% static "vendor/plugins/fileinput/js/fileinput.js"%}'></script>
+<script src='{% static "vendor/plugins/fileinput/themes/fa/theme.js"%}' type="text/javascript"></script>
+
+
+
+<!-- <script type="text/javascript" src='{% static "vendor/js/scripts.js"%}'></script> -->
+
+<script type="text/javascript">
+
+var photo_container = [];
+var photo_url = [];
+var PreviewConfig   = []
+
+$("#uploaded_photo img").each(function( index ){
+	photo_container.push( $(this).attr('id') );
+	photo_url.push( $(this).attr('src') );
+	$("#id_photos").val(  JSON.stringify(photo_container)  );
+	PreviewConfig.push( {"caption": $(this).attr('caption'), "size": 329892, "width": "120px", "url": $(this).attr('delete') , "key": index } );
+});
+
+
+// initialize with with plugin options
+$("#input-id").fileinput({
+        theme: 'fa',
+        showUpload: false,
+        browseClass: "btn btn-primary btn-lg",
+        uploadUrl: '/dashboard/products/upload/',
+        maxFilePreviewSize: 10240,
+        allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+        overwriteInitial: false,
+        initialPreviewAsData: true,
+        initialPreview: photo_url,
+        initialPreviewConfig: PreviewConfig,
+    });
+
+$('#input-id').on('fileuploaded', function(event, data, previewId, index) {
+	photo_container.push( data.response.id );
+	$("#id_photos").val(  JSON.stringify(photo_container)  );
+});
+
+$('#input-id').on('filedeleted', function(event, key, jqXHR, data) {
+	console.log('filedeleted', key )
+    photo_container.splice(key,1);
+    $("#id_photos").val(  JSON.stringify(photo_container)  );
+});
+
+</script>
+
+<script type="text/javascript">
+
+
+	var variant = [];
+	$(".variant-container #variant_row").each(function(index , data){
+		var name = '#variant_name'  + index;
+		var value = '#variant_value' + index;
+		variant.push({ 'name':$(name).val() , 'value': $(value).val() });
+	});
+	//$("#id_variant").val(  JSON.stringify(variant)  );
+
+		$( "#ProductForm" ).submit(function( event ) {
+		var variant = [];
+		$(".variant-container #variant_row").each(function(index , data){
+			var name = '#variant_name'  + index;
+			var value = '#variant_value' + index;
+			variant.push({ 'name':$(name).val() , 'value': $(value).val() });
+		});
+			$("#id_variant").val(  JSON.stringify(variant)  );
+		});
+
+
+		$("#add-v").on("click", function(e){
+		e.preventDefault();
+		variant = [] ;
+		$(".variant-container #variant_row").each(function(index , data){
+			var name = '#variant_name'  + index;
+			var value = '#variant_value' + index;
+			variant.push({ 'name':$(name).val() , 'value': $(value).val() });
+		});
+
+		$('.variant-container').html('');
+		variant.push({'name':'','value': ''});
+
+
+		$(variant).each(function( index , data ) {
+			var NameLabel  = $('<label"></label>').text('Name (*)');
+			$(NameLabel).attr('id', 'variant_name_label_' + index);
+			var NameInput  = $('<input type="text" class="form-control" placeholder="name">').val(data.name);
+			$(NameInput).attr('id', 'variant_name' + index );
+			var ValueLabel = $('<label"></label>').text('Value (*)');
+			$(ValueLabel).attr('id', 'variant_value_label_' + index);
+			var ValueInput = $('<input type="text" class="form-control" placeholder="Value">').val(data.value);
+			$(ValueInput).attr('id', 'variant_value' + index);
+			$(ValueInput).attr('data-role', 'tagsinput');
+			var Remove = $('<a></a>').text("Remove");
+			$(Remove).attr('href', '#');
+			$(Remove).addClass("remove-v")
+			$(Remove).attr('value',index );
+			var RemoveCol  = $('<span></span>').addClass("float-right text-right")
+			$(RemoveCol).attr('id', 'remove_' + index );
+			$(RemoveCol).append( Remove );
+			var NameCol   = $('<div class="col"> </div>').append( NameLabel , NameInput );
+			var ValueCol  = $('<div class="col"> </div>').append( ValueLabel , ValueInput );
+			var row = $("<div class='row'></div>").append( RemoveCol, NameCol , ValueCol,  );
+			$(row).after().append( RemoveCol );
+			$(row).attr('id', 'variant_row');
+			$(row).addClass("variant_row_" + index )
+			$('.variant-container').append(row);
+			var new_line = $('</br>');
+			$('.variant-container').append( RemoveCol );
+			$('.variant-container').append( new_line );
+		});
+
+	});
+
+$(document).on("click",'.remove-v', function(e){
+	var target = $(e.currentTarget);
+	var RemoveCol = '#remove_'   + target.attr('value') ;
+	var row = '.variant_row_'   + target.attr('value') ;
+	$(row).remove();
+	$(RemoveCol).remove();
+	variant.splice(target.attr('value'),1);
+})
+
+
+</script>
+
+{% endblock %}
+
+
+

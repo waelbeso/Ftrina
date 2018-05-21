@@ -1,0 +1,67 @@
+
+{% extends 'vendor/base.html' %}
+{% load static %}
+
+{% block head %}
+	<title> Ftrina - Dashboard - Choose Courier </title>
+<link rel="stylesheet" href='{% static "vendor/css/couriers.data.svg.css"%}'>
+<link rel="stylesheet" href='{% static "vendor/ftrina.css"%}'>
+
+
+{% endblock %}
+
+{% block content %}
+
+				<main class="main-content p-5" role="main">
+					<div class="row">
+						<div class="col-md-12">
+							<h1>Choose Courier</h1>
+						</div>
+					</div>
+					<div class="row mb-5">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<code>Couriers</code>
+									<div class="progress">
+										<div class="progress-bar progress-bar-sm bg-gradient" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+									</div>
+									<div class="header-btn-block">
+										<a href="{%url 'dashboard_shipping' %}" class="btn btn-success waves-effect waves-light">
+											<i class="fa fa-arrow-left"></i> 
+											Back
+										</a>
+									</div>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="couriers" >
+												<a href="{%url  'dashboard_shipping_courier_add'  courier='FedexAccount' %}">
+												<span class="slug-fedex"></span>
+												<p>FedEx</p>
+												</a>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="couriers" >
+												<a href="{%url  'dashboard_shipping_courier_add'  courier='AramexAccount' %}">
+												<span class="slug-aramex"></span>
+												<p>Aramex</p>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+{% endblock %}
+
+
+
+
+
+
+

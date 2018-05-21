@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+  <title>Registration - Ftrina</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="active">Register</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+
+    <!-- Main Content -->
+    <div style="min-height: 600px" class="container m-t-3">
+      <div class="row">
+        <!-- Login Form -->
+        <div class="col-sm-12 col-xs-12 login-register-form m-b-3">
+          <div class="title"><span> Registration done  </span></div>
+            <div class="alert alert-success text-center" role="alert">
+              <br/>
+              <p style="font-size: 30px; color: #666">Thank you for signing up</p>
+              <p style="font-size: 13px; color: #666"> “Your email confirmation will be sent to your inbox shortly.Please check your email and confirm your email address”</p>
+              <p></p>
+
+              <br/><br/>
+              <a href="{% url 'home' %}" type="button" class="btn btn-default btn-theme"><i class="fa fa-long-arrow-left"></i> Back Home </a >
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- End Main Content -->
+{% endblock %}
+
+

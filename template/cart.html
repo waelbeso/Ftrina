@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load ratings %}
+{% block head %}
+  <title> {{shop.name}} - Shipping </title>
+  <link rel='stylesheet' href = '{% static "css/metisMenu.css" %}' />
+  <link rel='stylesheet' href = '{% static "css/mm-vertical.css" %}' />
+
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li>Shopping Cart</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Main Content -->
+    <div style="min-height: 620px" class="container m-t-2">
+      <div class="row">
+
+        <!-- Shopping Cart List -->
+        <div class="col-md-12">
+          <div class="title"><span>My Shopping Cart</span></div>
+          {%if error %}
+          <div class="alert alert-danger" role="alert">
+          <p>{{error}}</p>
+          </div>
+
+          {%endif%}
+          <div class="table-responsive">
+            <table class="table table-bordered table-cart">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th>Unit price</th>
+                  <th>SubTotal</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%for o in request.basket.get_orders %}
+                <tr>
+                  <td class="img-cart">
+                    <a href="{{o.product.url}}">
+                      <img alt="{{o.product.url}}" src="{{o.product.main_image}}" class="img-thumbnail">
+                    </a>
+                  </td>
+                  <td>
+                    <p><a href="{{o.product.url}}" class="d-block">{{o.product.name}}
+                      {%if o.product.with_option %}
+                      <small>(
+                      {%for option in o.options %}
+                      {{option.name}}: {{option.value}} -
+                      {%endfor%}
+                      )</small>
+                      {%endif%}
+                    </a></p>
+                  </td>
+                  <form order="kjhkj" action="" method="post" >{% csrf_token %}
+
+                    <input type="hidden" name="order" id="id_order" value="{{o.order_id}}"  >
+                    <td class="">
+                      <input class="form-control text-center input-qty " type="number" min=1  max={{o.product.max_value}} name="quantity"  id="id_quantity" value="{{ o.product.quantity }}" >
+                    </td> 
+                  <td class="unit">{{o.product.price}} {{o.product.price_currency}}</td>
+                  <td class="sub">{{o.product.total_price}}</td>
+                  <td class="action text-center">
+                     <button type="submit" data-toggle="tooltip" data-placement="top" data-original-title="Update" class="btn"> <i class="fa fa-refresh"> </i></button>
+                  </form>
+                    <a href="{% url 'remove_from_cart' order=o.order_id %}" class="text-danger" data-toggle="tooltip" data-placement="top" data-original-title="Remove"><i class="fa fa-trash-o"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  {%endfor%}
+                </tr>
+              {% if request.basket.usd %}
+               <tr>
+                  <td colspan="4" class="text-right">Total: (USD)</td>
+                  <td colspan="2"><b>{{ request.basket.usd }}</b></td>
+                </tr>
+              {%endif%}
+              </tbody>
+            </table>
+          </div>
+          <nav aria-label="Shopping Cart Next Navigation">
+            <ul class="pager">
+              <li class="previous"><a href="{% url 'home' %}"><span aria-hidden="true">&larr;</span> Continue Shopping</a></li>
+              <li class="next"><a href="{% url 'checkout' %}">Checkout <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+          </nav>
+        </div>
+        <!-- End Shopping Cart List -->
+      </div>
+
+    </div>
+    <!-- End Main Content -->
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

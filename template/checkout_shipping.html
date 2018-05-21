@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load ratings %}
+{% block head %}
+  <title> {{shop.name}} - Checkout </title>
+
+
+
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li>Confirm</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Main Content -->
+    <div style="min-height: 600px" class="container m-t-2">
+      <div class="row">
+
+        <div class="col-sm-6">
+          <div class="title"><span>Billing Address</span></div>
+            <ul class="list-group list-group-nav">
+              <li class="list-group-item">{{data.first_name}}</li>
+              <li class="list-group-item">{{data.last_name}}</li>
+              <li class="list-group-item">{{data.email}}</li>
+              <li class="list-group-item">{{data.mobile}}</li>
+              <li class="list-group-item">{{data.address}}</li>
+              <li class="list-group-item">{{data.city}}</li>
+              <li class="list-group-item">{{data.zip_code}}</li>
+              <li class="list-group-item">{{data.country}}</li>
+              <li class="list-group-item">{{data.province}}</li>
+            </ul>
+          </div>
+
+        <div class="col-sm-6">
+          <div class="title"><span>Shipping Address</span></div>
+            <ul class="list-group list-group-nav">
+              <li class="list-group-item">{{data.first_name}}</li>
+              <li class="list-group-item">{{data.last_name}}</li>
+              <li class="list-group-item">{{data.email}}</li>
+              <li class="list-group-item">{{data.mobile}}</li>
+              <li class="list-group-item">{{data.address}}</li>
+              <li class="list-group-item">{{data.city}}</li>
+              <li class="list-group-item">{{data.zip_code}}</li>
+              <li class="list-group-item">{{data.country}}</li>
+              <li class="list-group-item">{{data.province}}</li>
+          </ul>
+        </div>
+      </div>
+      {%if error%}
+      <div class="row">
+        <div class="alert alert-danger" role="alert">
+          {{error}}
+        </div>
+      </div>
+      {%endif%}
+      <div class="row">
+        <!-- Checkout Form -->
+        <!-- Delivery Form -->
+        <form action="" method="post" >{% csrf_token %}
+
+          
+          <div class="form-group col-sm-6">
+            <label for="">Delivery Option</label>
+            {{form.shipping}}
+          </div>
+        <div class="col-md-12">
+          <div class="title"><span>Shopping Cart</span></div>
+
+        <!-- Shopping Cart List -->
+          <div class="table-responsive">
+            <table class="table table-bordered table-cart">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th>Unit price</th>
+                  <th>SubTotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%for o in request.basket.get_orders %}
+                <tr>
+                  <td class="img-cart">
+                    <a href="detail.html">
+                      <img alt="{{o.product.url}}" src="{{o.product.main_image}}" class="img-thumbnail">
+                    </a>
+                  </td>
+                  <td>
+                    <p><a href="detail.html" class="d-block">{{o.product.name}}</a></p>
+                  </td>
+                  <td class="unit text-center">{{o.product.quantity}}</td>
+                  <td class="unit">{{o.product.price}} {{o.product.price_currency}}</td>
+                  <td class="sub">{{o.product.total_price}}</td>
+                </tr>
+                <tr>
+                  {%endfor%}
+                </tr>
+              {% if request.basket.usd %}
+               <tr>
+                  <td colspan="4" class="text-right">Total: (USD)</td>
+                  <td colspan="2"><b>{{ request.basket.usd }}</b></td>
+                </tr>
+              {%endif%}
+              </tbody>
+            </table>
+          </div>
+          <nav aria-label="Shopping Cart Next Navigation">
+            <ul class="pager">
+              <li class="previous"><a href="{% url 'cart' %}"><span aria-hidden="true">&larr;</span> Back to Shopping Cart</a></li>
+              {%if not error %}
+              <button type="submit" class="btn btn-default btn-sm next pull-right">  Confirm & Pay  <i class="fa fa-long-arrow-right"></i></button>
+              {%endif%}
+              <!-- <li class="btn btn-default btn-sm next pull-right"><a href="{% url 'pay' checkout=data.id %}"><span aria-hidden="true">&larr;</span> Confirm & Pay </a></li> -->
+            </ul>
+          </nav>
+        <!-- End Shopping Cart List -->
+        </div>
+        <!-- End Checkout Form -->
+
+      </form>
+      </div>
+
+    </div>
+    <!-- End Main Content -->
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

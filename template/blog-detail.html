@@ -1,0 +1,87 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+  <title> {{ article.title }} - Ftrina - Blog </title>
+{% endblock %}
+
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'blog' %}">Blog</a></li>
+          <li class="active">{{ article.title }}</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+
+    <!-- Main Content -->
+    <div class="container m-t-3">
+      <div class="row">
+
+        <!-- Content -->
+        <div class="col-sm-8 blog-detail-content">
+          <div class="title"><span>{{ article.title }}</span></div>
+          <small>
+            <span><i class="fa fa-clock-o"></i> {{ article.date }}</span>
+            <span><i class="fa fa-user"></i> <a href="">Ftrina</a></span>
+          </small>
+          {% if article.image %}
+          <img src="{{ article.image }}" alt="{{ article.title }}" class="img-thumbnail">
+          {% endif %}
+          {% autoescape off %}
+          {{ article.body }}
+          {% endautoescape %}
+
+          <div class="title m-t-3"><span>Share to</span></div>
+          <div class="share-button">
+            <button type="button" class="btn btn-primary"><i class="fa fa-facebook"></i></button>
+            <button type="button" class="btn btn-info"><i class="fa fa-twitter"></i></button>
+            <button type="button" class="btn btn-danger"><i class="fa fa-google-plus"></i></button>
+            <button type="button" class="btn btn-primary"><i class="fa fa-linkedin"></i></button>
+            <button type="button" class="btn btn-warning"><i class="fa fa-envelope"></i></button>
+          </div>
+        </div>
+        <!-- End Content -->
+
+        <!-- Blog Sidebar -->
+        <div class="col-sm-4">
+          <div class="title"><span>Categories</span></div>
+            <ul class="list-group list-group-nav">
+              {% for o in categories %}
+              <li class="list-group-item">&raquo; <a href="{% url 'blog_categorie' categorie=o.name %}">{{ o.name }}</a></li>
+              {% endfor %}
+            </ul>
+        </div>
+        <!-- End Blog Sidebar -->
+
+      </div>
+    </div>
+    <!-- End Main Content -->
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"" type="image/x-icon">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ftrina</title>
+
+    <!-- Bootstrap -->
+    <link rel='stylesheet' href = '{% static "bootstrap/css/bootstrap.css" %}' />
+    <!-- Plugins -->
+    <link rel='stylesheet' href = '{% static "css/bootstrap-select.css" %}' />
+    <link rel='stylesheet' href = '{% static "css/style.teal.flat.css" %}' />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="fade-down">
+    <!-- Middle Header -->
+    <div class="middle-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 logo">
+            <a href="index.html"><img alt="Logo" src="{% static 'images/logo.png' %}" class="img-responsive" data-text-logo="RFtrina" /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Middle Header -->
+
+    <!-- Content -->
+{% block content %}
+
+{% endblock %}
+
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 col-sm-6">
+            <div class="title-footer"><span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Footer -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src='{% static "js/jquery.js" %}'></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src='{% static "bootstrap/js/bootstrap.js" %}'></script>
+    <!-- Plugins -->
+    <script src='{% static "js/bootstrap-select.js" %}'></script>
+    <script src='{% static "js/bootstrap3-typeahead.js" %}'></script>
+    <script src='{% static "js/bootstrap-toolkit.js" %}'></script>
+    <script src='{% static "js/mimity.js" %}'></script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+  <title>About Us - Ftrina </title>
+{% endblock %}
+
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="active">About us</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Main Content -->
+    <div class="container m-t-3">
+      <div class="row">
+
+        <!-- Content -->
+        <div class="col-sm-8">
+          <div class="title"><span>About Us</span></div>
+          <img src="{% static 'images/demo/about.png' %}" alt="Our Team" class="img-thumbnail m-b-2">
+
+          <p class="desc">
+          We've launched our E-commerce Marketplace to satisfy the people who are looking for super easy solutions to start online stores from our website or our mobile apps at an affordable cost.
+          </p>
+
+          <p class="desc">
+          If you do care about your brand, your logo and like to show your store informatin and location and the same time grow your sales, we are the right solution for you.
+          </p>
+
+          <p class="desc">
+          We provide your store with the required space to show up and allow the consumers to contact you directly; We are a market place, sales channels, distributors for your own brand and products.
+          </p>
+
+          <div class="panel-group faq-panel m-t-2" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Why you need Ftrina ?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                <img src="{% static 'images/demo/about2.png' %}" alt="Our Team" class="img-thumbnail m-b-2">
+                <p>
+                Building your own website for branding is a good theory but you will end up finding yourself operating your store in the desert. You need to accomplish tons of marketing work plus the technical efforts to maintain your online store. We provide you with the excellent solutions to saving your time and effort at an affordable price.
+                </p>
+                <p>
+                You know, in ancient time when you entered a market, There was always a guy who walked around the market, promoting products of some shops to visitors, shoppers or audience.
+                </p>
+                <p>
+                This guy got paid from those store owners, who wanted their products promoted in the market;With time, this guy disappeared and this kind of position in markets also disappeared, In Ftrina we are aimed to bring this guy back to the digital age.
+                </p>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Where we are ?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                <img src="{% static 'images/demo/about3.png' %}" alt="Our Team" class="img-thumbnail m-b-2">
+                <p>
+                If this is your first visit to Ftrina, we'd like to give you warm welcome to version 3 of our platform. Our story starts in the year 2015, Our Humble Beginnings,
+                our idea with main lines, searching for required licenses and the appropriateness of the ideas with the laws.
+                </p>
+                <p>
+                <B>JANUARY 2015</B> We transitioned to Full Service; gathering all information in a proposal to establish a company, presenting the project to the public for the purpose of the survey.
+                </p>
+                <B>NOVEMBER 2016</B> Ftrina Limited was born. The company is established in Hong Kong as a limited liability IT company in order to work in legal form.
+                </p>
+
+                <B>DECEMBER 2016</B> Phase Two Operation. We operated in beta model for market testing, technical testing and development. All our order payments are processed offline and our customers are enjoying complete free services if they follow our regulation standard.
+                </p>
+
+                <B>August 2017</B> Fund Raising. Oh ya .. We get some fund to support our developing; it's good push forward to develop payment solution integration and support our customers with the solutions they expect.
+                </p>
+
+                <B>DECEMBER 2017</B> Ftrina Inc, is born. On our way home (Silicon Valley) The company is established in Delware as an Inc., IT company, presenting the project to the puplic in US legally and partnership with our partners we are hunting for.
+                </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  What Ftrina Offers ?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                <img src="{% static 'images/demo/about5.png' %}" alt="Our Team" class="img-thumbnail m-b-2">
+
+                <div class="media">
+                  <div class="media-left">
+                    <img class="media-object img-thumbnail" src="{% static 'images/about-us01.svg' %}" width="50" alt="product">
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"><B>Shipping Management</B></p>
+                    <div>Our solution supports shipping by external shipping accounts and internal individual accounts.</div>
+                  </div>
+                </div>
+
+                <div class="media">
+                  <div class="media-left">
+                    <img class="media-object img-thumbnail" src="{% static 'images/about-us02.svg' %}" width="50" alt="product">
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"><B>Payment Management</B></p>
+                    <div>We build the network to support multi payment and management settlement with banking network integration.</div>
+                  </div>
+                </div>
+
+                <div class="media">
+                  <div class="media-left">
+                    <img class="media-object img-thumbnail" src="{% static 'images/about-us03.svg' %}" width="50" alt="product">
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"><B>Services Booking</B></p>
+                    <div>We keep in mind the differences between products and services to support the service sector with the right solution.</div>
+                  </div>
+                </div>
+
+                <div class="media">
+                  <div class="media-left">
+                    <img class="media-object img-thumbnail" src="{% static 'images/about-us04.svg' %}" width="50" alt="product">
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"><B>Coupon Management</B></p>
+                    <div>Coupons with time limit or use limit, we support both.</div>
+                  </div>
+                </div>
+
+                <div class="media">
+                  <div class="media-left">
+                    <img class="media-object img-thumbnail" src="{% static 'images/about-us05.svg' %}" width="50" alt="product">
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"><B>Location Dictionary</B></p>
+                    <div>Making the markets close to consumers, we build map for all the products and services listed in our network.</div>
+                  </div>
+                </div>
+
+                <div class="media">
+                  <div class="media-left">
+                    <img class="media-object img-thumbnail" src="{% static 'images/about-us06.svg' %}" width="50" alt="product">
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"><B>Customer Services</B></p>
+                    <div>We encourage consumers to get in touch with vendors by offering communication channels in our network.</div>
+                  </div>
+                </div>
+
+                <div class="media">
+                  <div class="media-left">
+                    <img class="media-object img-thumbnail" src="{% static 'images/about-us07.svg' %}" width="50" alt="product">
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"><B>Multi Language Publishing</B></p>
+                    <div>Products with different languages will promote the vendors' businesses globally; we support multi language listing for product and service.</div>
+                  </div>
+                </div>
+
+                <div class="media">
+                  <div class="media-left">
+                    <img class="media-object img-thumbnail" src="{% static 'images/about-us08.svg' %}" width="50" alt="product">
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"><B>Order Management</B></p>
+                    <div>Our system can track the orders during the shipping operation and update the customers in real time.</div>
+                  </div>
+                </div>
+
+                <div class="media">
+                  <div class="media-left">
+                    <img class="media-object img-thumbnail" src="{% static 'images/about-us09.svg' %}" width="50" alt="product">
+                  </div>
+                  <div class="media-body">
+                    <pclass="media-heading"><B>Insurance Management</B></p>
+                    <div>Insurance management becomes easier when all relevant information is availabl;in out system insurance is easy to file and claim.</div>
+                  </div>
+                </div>
+
+                <div class="media">
+                  <div class="media-left">
+                    <img class="media-object img-thumbnail" src="{% static 'images/about-us10.svg' %}" width="50" alt="product">
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"><B>Location Assistant</B></p>
+                    <div>Finding vendors by location saves time; our map is built to support businesses to extend and consumer requirement.</div>
+                  </div>
+                </div>
+
+                <div class="media">
+                  <div class="media-left">
+                    <img class="media-object img-thumbnail" src="{% static 'images/about-us11.svg' %}" width="50" alt="Business Validation">
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"><B>Business Validation</B></p>
+                    <div>No trust no business; we validate businesses to get consumer confidence and grow.</div>
+                  </div>
+                </div>
+
+                <div class="media">
+                  <div class="media-left">
+                    <img class="media-object img-thumbnail" src="{% static 'images/about-us12.svg' %}" width="50" alt="Extras Management">
+                  </div>
+                  <div class="media-body">
+                    <p class="media-heading"><B>Extras Management</B></p>
+                    <div>Sometimes the consumer needs adjustments for products and our system supports Extras Per product.</div>
+                  </div>
+                </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingFour">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                  You need more information about Ftrina ?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                <div class="panel-body">
+                <img src="{% static 'images/demo/about4.png' %}" alt="Our Team" class="img-thumbnail m-b-2">
+
+                <p> Find us in social network or start-up platforms, attend our events or just try our apps and website, google Ftrina and read about us, watch our YouTube videos. </p>
+
+                <p> Finally if you need our pitch deck, you can find 
+                <a href="https://fb.me/ftrinacom"> <b> solution </b> </a> and one more 
+                <a href="https://fb.me/ftrinacom"> <b> solution </b> </a> </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Content -->
+
+        <div class="clearfix visible-xs m-b-2"></div>
+
+        <!-- Testimonials -->
+        <div class="col-sm-4">
+          <div class="title"><span>Testimonials</span></div>
+          <blockquote class="testimonial">
+            <p>Write your reviews in social network or in app store and we will gladly post them here under your names.</p>
+            <footer>Someone famous in <cite title="Source Title">planet earth</cite></footer>
+          </blockquote>
+        </div>
+        <!-- End Testimonials -->
+
+      </div>
+    </div>
+    <!-- End Main Content -->
+
+{% endblock %}

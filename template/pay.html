@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load ratings %}
+{% block head %}
+  <title> {{shop.name}} - Checkout </title>
+
+<link rel='stylesheet' href = '{% static "css/stripe.css" %}' />
+
+
+
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li>Pay with card</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Main Content -->
+    <div style="min-height: 600px" class="container m-t-2">
+      <div class="row">
+        <div class="title"><span>Card Information</span></div>
+
+          <!--Example 5-->
+          <div class="cell example example5">
+            <form  id="payment-form" method="post" >{% csrf_token %}
+              <div id="example5-paymentRequest">
+                <!--Stripe paymentRequestButton Element inserted here-->
+               </div>
+
+              <fieldset>
+                <div class="row">
+                  <div class="field">
+                    <label for="name" data-tid="name_label">Name</label>
+                    {{form.name}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="field">
+                    <label for="card-element" data-tid="elements_examples.form.card_label">Card</label>
+                    <div id="card-element" class="input" ></div>
+                  </div>
+                </div>
+
+                <button type="submit" data-tid="elements_examples.form.pay_button">Pay ${{ total_price }} </button>
+              </fieldset>
+
+              <div class="error" role="alert"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17">
+                <path class="base" fill="#000" d="M8.5,17 C3.80557963,17 0,13.1944204 0,8.5 C0,3.80557963 3.80557963,0 8.5,0 C13.1944204,0 17,3.80557963 17,8.5 C17,13.1944204 13.1944204,17 8.5,17 Z"></path>
+              </svg>
+              <span class="message"></span></div>
+              {{form.stripeToken}}
+            </form>
+          </div>
+
+
+
+        <!-- Shopping Cart -->
+        <div class="col-md-12">
+          <div class="title"><span>Shopping Cart</span></div>
+
+        <!-- Shopping Cart List -->
+          <div class="table-responsive">
+            <table class="table table-bordered table-cart">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th>Unit price</th>
+                  <th>SubTotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%for o in request.basket.get_orders %}
+                <tr>
+                  <td class="img-cart">
+                    <a href="detail.html">
+                      <img alt="{{o.product.url}}" src="{{o.product.main_image}}" class="img-thumbnail">
+                    </a>
+                  </td>
+                  <td>
+                    <p><a href="detail.html" class="d-block">{{o.product.name}}</a></p>
+                    <!--<small>Size : S</small>-->
+                  </td>
+                  <td class="unit text-center">{{o.product.quantity}}</td>
+                  <!-- <td class="input-qty"><input type="text" value="{{o.product.quantity}}" class="form-control text-center" /></td>-->
+                  <td class="unit">{{o.product.price}} {{o.product.price_currency}}</td>
+                  <td class="sub">{{o.product.total_price}}</td>
+                </tr>
+                <tr>
+                  {%endfor%}
+                <tr>
+
+                  <td colspan="2">
+                    <p><a href="detail.html" class="d-block">{{checkout.service_name}}</a></p>
+                    <!--<small>Size : S</small>-->
+                  </td>
+                  <td class="unit text-center">1</td>
+                  <!-- <td class="input-qty"><input type="text" value="{{o.product.quantity}}" class="form-control text-center" /></td>-->
+                  <td class="unit">{{checkout.shipment_price}} {{checkout.shipment_price_currency}}</td>
+                  <td class="sub">{{checkout.shipment_price}}</td>
+                </tr>
+                <tr>
+
+                </tr>
+              {% if request.basket.usd %}
+               <tr>
+                  <td colspan="4" class="text-right">Total: (USD)</td>
+                  <td colspan="2"><b>{{ total_price }}</b></td>
+                </tr>
+              {%endif%}
+
+              </tbody>
+            </table>
+          </div>
+          <nav aria-label="Shopping Cart Next Navigation">
+            <ul class="pager">
+              <li class="previous"><a href="{% url 'cart' %}"><span aria-hidden="true">&larr;</span> Back to Shopping Cart</a></li>
+              <!-- <button type="submit" class="btn btn-theme txt-white pull-right">  Pay  <i class="fa fa-long-arrow-right"></i></button> -->
+            </ul>
+          </nav>
+        <!-- End Shopping Cart List -->
+        </div>
+        <!-- End Checkout Form -->
+
+      </div>
+
+    </div>
+    <!-- End Main Content -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block foot %}
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src='{% static "js/stripe.js" %}'></script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

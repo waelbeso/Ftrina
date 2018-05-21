@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+  <title>Login - Ftrina</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <div class="breadcrumb-container">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="active">Order</li>
+        </ol>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+    <!-- Main Content -->
+    <div class="container m-t-3">
+      <div class="row">
+        <!--  QR-->
+        <div class="col-sm-4 col-md-3 m-b-3">
+          <div class="account-picture"><img src="{{ qr }}" alt="" class="img-responsive"></div>
+          <h4 class="text-center m-b-3">Customer Qr Code</h4>
+        </div>
+        <!-- End QR -->
+        <!-- Order Content -->
+        <div class="col-sm-8 col-md-9">
+          <div class="title m-b-2"><span>Order Information</span></div>
+          <form action="" method="post" >{% csrf_token %}
+          <input type="hidden" name="order" id="order" value="{{OrderID}}">
+          
+          <div class="row">
+          <ul class="list-group list-group-nav">
+            <li class="list-group-item">
+              <div class="form-group">
+                <label for="firstNameInput">Brand (*)</label>
+                {{ form.brand }}
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="form-group">
+                <label for="lastNameInput">Quantity (*) </label>
+                {{ form.quantity }}
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="form-group">
+                <label for="emailInput"> Design (*)</label>
+                {{ form.design }}
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="form-group">
+                <label for="emailInput"> Garment (*)</label>
+                {{ form.garment }}
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="form-group">
+                <label for="emailInput"> Size (*)</label>
+                {{ form.size }}
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="form-group">
+                <label for="emailInput"> Condition (*)</label>
+                {{ form.condition }}
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="form-group">
+                <label for="emailInput"> Inner (*)</label>
+                {{ form.inner }}
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="form-group">
+                <label for="emailInput"> Packaging (*)</label>
+                {{ form.packaging }}
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="form-group">
+                <label for="emailInput"> Payment (*)</label>
+                {{ form.payment }}
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="form-group">
+                <label for="lastNameInput"> Pick up (*) </label>
+                {{ form.pick_up }}
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="form-group">
+                <label for="firstNameInput">Postal (*)</label>
+                {{ form.postal }}
+              </div>
+            </li>
+          </ul>
+            <input type="submit" class="btn btn-theme pull-right" value="Finish"/>
+          </form>
+          </div>
+        </div>
+        <!-- End Order Content -->
+
+      </div>
+    </div>
+    <!-- End Main Content -->
+{% endblock %}

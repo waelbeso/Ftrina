@@ -1,0 +1,15 @@
+{{product}}
+
+{% if queryset > 0 %}
+
+{%for o in queryset %}
+
+<li><a class="dropdown-item" href="#" role="option">{{o.name}}</a></li>
+{% endfor %}
+
+
+{% else %}
+
+<li><a class="dropdown-item" href="#" role="option">None to Show</a></li>
+
+{% endif %}
