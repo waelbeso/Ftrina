@@ -179,7 +179,7 @@ class ProductForm(forms.Form):
 
 	price            = forms.FloatField(required=True, min_value=1, widget=forms.NumberInput(attrs={'placeholder':'Price', 'class':'form-control', 'id':'priceInput' }))
 	weight           = forms.FloatField(required=True, max_value=20000, min_value=1, widget=forms.NumberInput(attrs={'placeholder':'Product Weight', 'class':'form-control', 'id':'weightInput' }))
-	origin           = forms.ChoiceField(label=_('Origin:'),choices=COUNTRIES, required=True, widget=forms.Select(attrs={ 'class':'form-control selectpicker', 'id':'originInput', 'data-live-search':'true','data-dropup-auto':'false'   }))
+	origin           = forms.ChoiceField(label=_('Origin:'),choices=COUNTRIES_2, required=True, widget=forms.Select(attrs={ 'class':'form-control selectpicker', 'id':'originInput', 'data-live-search':'true','data-dropup-auto':'false'   }))
 	variant          = forms.CharField(required=False,widget=forms.HiddenInput(attrs={ 'class':'variant_container'}) )
 	photos           = forms.CharField(required=False,widget=forms.HiddenInput(attrs={ 'class':'photo_container'}) )
 	sku              = forms.CharField(required=True,widget=forms.TextInput(attrs={'placeholder':'Stock Keeping Unit', 'class':'form-control', 'id':'skuInput' }))

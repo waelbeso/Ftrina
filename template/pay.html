@@ -100,13 +100,13 @@
                 <tr>
 
                   <td colspan="2">
-                    <p><a href="detail.html" class="d-block">{{checkout.service_name}}</a></p>
+                    <p><a href="detail.html" class="d-block">Shipping By {{checkout.carrier}}</a></p>
                     <!--<small>Size : S</small>-->
                   </td>
                   <td class="unit text-center">1</td>
                   <!-- <td class="input-qty"><input type="text" value="{{o.product.quantity}}" class="form-control text-center" /></td>-->
-                  <td class="unit">{{checkout.shipment_price}} {{checkout.shipment_price_currency}}</td>
-                  <td class="sub">{{checkout.shipment_price}}</td>
+                  <td class="unit">{{checkout.rate}} {{checkout.currency}}</td>
+                  <td class="sub">{{checkout.rate}}</td>
                 </tr>
                 <tr>
 

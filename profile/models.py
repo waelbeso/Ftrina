@@ -96,6 +96,7 @@ class Profile(AbstractUser,UserEmailConfirmation,UserMobileConfirmation):
 	#photo = models.URLField(max_length=200,default = "https://res.cloudinary.com/ftrina/image/upload/v1469046333/default_user_avatar_ljpbex.png" )
 	photo_public_id = models.CharField( max_length=256,blank=True, null=True, default = "default_user_avatar_ljpbex")
 	shop_created = models.BooleanField(default=False)
+	stripe_customer_id = models.CharField( max_length=256,blank=True, null=True)
 
 	about_me = models.TextField(blank=True, null=True)
 	website_url = models.TextField(blank=True, null=True)

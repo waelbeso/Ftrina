@@ -45,7 +45,7 @@
                 <td>Price</td>
                 <td>
                   <div class="price">
-                    <div>{{ product.price_currency }} {{ product.price }}</div>
+                    <div> USD {{ product.usd_price }}</div>
                   </div>
                 </td>
               </tr>
@@ -153,7 +153,7 @@
                 </div>
                 <h6><a href="{{o.url}}"> {{o.name|truncatechars:50}} </a></h6>
                 <div class="price">
-                  <div> {{ o.price }} <span class="pull-right">{{ o.price_currency }}</span> </div>
+                  <div> {{ o.usd_price }} <span class="pull-right">USD</span> </div>
                 </div>
                 <div>Orders  <span class="pull-right">({{o.orders}})</span></div>
               <div class="rating">

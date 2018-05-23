@@ -15,9 +15,6 @@ import requests
 
 
 
-
-
-
 def rates(request,shop):
 	store = Shop.objects.get(slug = shop)
 	loginForm=LoginForm()
@@ -27,7 +24,7 @@ def rates(request,shop):
 
 
 	print store.name
-	print store.ship_from
+
 	url = 'https://sandbox-api.postmen.com/v3/rates'
 
 	headers = {

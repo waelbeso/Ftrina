@@ -95,6 +95,7 @@ class Variant(models.Model):
 	name                 = models.CharField(max_length=55,null=True,blank=True)
 	price                = models.DecimalField(null=True,blank=True, max_digits=19, decimal_places=2)
 	value                = models.CharField(max_length=100,null=True,blank=True)#
+	usd_price            = models.DecimalField(null=True,blank=True, max_digits=19, decimal_places=2)
 	def __unicode__(self): 
 		return self.value
 class Product(models.Model):
@@ -115,6 +116,8 @@ class Product(models.Model):
 	with_variant         = models.BooleanField(default=False)
 	characteristics      = JsonField(null=True,blank=True) # can pass attributes like null, blank, ecc.
 	created_date         = models.DateTimeField(default=timezone.now,auto_now=False,blank=True) # at witch time
+	usd_price            = models.DecimalField(null=True,blank=True, max_digits=19, decimal_places=2)
+
 
 	def __unicode__(self): 
 		return '{} <{}>'.format(self.name, self.shop) #http://www.saltycrane.com/blog/2008/11/python-unicodeencodeerror-ascii-codec-cant-encode-character/
@@ -189,7 +192,7 @@ class Product(models.Model):
 		for o in variant_list:
 			variant_dict[o.name] = []
 		for o in variant_list:
-			variant_dict[o.name].append(  ( str(o.id) , str(o.value) + ' + ' + str(o.price) ) )
+			variant_dict[o.name].append(  ( str(o.id) , str(o.value) + ' + ' + str(o.usd_price) ) )
 			#variant_dict[o.name].append( {  "id":o.id, "name":o.name, "value": o.value, "price":int(o.price)   } )
 		for i in variant_dict:
 			variant.append( { "name":i,"value":variant_dict[i]  } )
@@ -455,6 +458,7 @@ class Shop(models.Model):
 				'rating':product.rating,
 				'orders':product.orders,
 				'url':str(product.url),
+				'usd_price':product.usd_price
 				})
 		return data
 	''' For shop home page Rendering '''
@@ -478,7 +482,8 @@ class Shop(models.Model):
 				'classification':'product',
 				'rating':product.rating,
 				'orders':product.orders,
-				'url':str(product.url) 
+				'url':str(product.url),
+				'usd_price':product.usd_price
 				})
 		return data
 
@@ -584,6 +589,7 @@ class Option(models.Model):
 	name                 = models.CharField(max_length=55,null=True,blank=True)
 	price                = models.DecimalField(null=True,blank=True, max_digits=19, decimal_places=2)
 	value                = models.CharField(max_length=100,null=True,blank=True)#
+	usd_price            = models.DecimalField(null=True,blank=True, max_digits=19, decimal_places=2)
 	def __unicode__(self): 
 		return self.value
 

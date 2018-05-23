@@ -58,14 +58,16 @@ class Checkout(models.Model):
 	notes           = models.TextField(blank=True, null=True)
 	session         = models.ForeignKey(Session,default='261bj1xhw9qxb0wpc3hkr1x9ozudc02a')
 
-	shipper_account = models.CharField(max_length=255, blank=True, null=True)
-	service_type    = models.CharField(max_length=255, blank=True, null=True)
-	service_name    = models.CharField(max_length=255, blank=True, null=True)
-	shipment_price  = models.DecimalField(null=True,blank=True, max_digits=19, decimal_places=2,default=0.00)
-	shipment_price_currency = models.CharField(max_length=55,null=True,blank=True)
+	customs_info    = models.CharField(max_length=255, blank=True, null=True)
 
+	carrier_account_id = models.CharField(max_length=255, blank=True, null=True)
+	rate_id            = models.CharField(max_length=255, blank=True, null=True)
+	currency           = models.CharField(max_length=255, blank=True, null=True)
+	rate               = models.DecimalField(null=True,blank=True, max_digits=19, decimal_places=2,default=0.00)
+	carrier            = models.CharField(max_length=55,null=True,blank=True)
 
-	status        = models.BooleanField(default=False)
+	status             = models.BooleanField(default=False)
+	stripe_customer_id = models.CharField( max_length=256,blank=True, null=True)
 
 	def __unicode__(self): 
 		return str(self.id)
@@ -89,36 +91,57 @@ class BasketManager(models.Manager):
 	pass
 
 class Basket(models.Model):
-
 	id                      = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 	owner                   = models.ForeignKey(Profile, null=True, blank=True) # The Profile Who own this Basket
 	session                 = models.ForeignKey(Session,default='261bj1xhw9qxb0wpc3hkr1x9ozudc02a')  
 	usd                     = models.DecimalField(null=True,blank=True, max_digits=19, decimal_places=2,default=0.00)
 	shipment_price          = models.DecimalField(null=True,blank=True, max_digits=19, decimal_places=2,default=0.00)
 	shipment_price_currency = models.CharField(max_length=55,null=True,blank=True)
-
 	objects = BasketManager()
 
+
+	''' Customs item for easypost api '''
 	@property
-	def items(self):
+	def customs_item(self):
 		data = []
 		orders = self.order_set.all().filter(status=False)
 		for order in orders:
 			data.append({
 				"description": order.product.cart_description,
-				"origin_country": order.product.origin,
 				"quantity": order.quantity,
-				"price": {
-				"amount": float( self.get_price(order) ),
-				"currency": order.product.price_currency
-				},
-				"weight": {
-				"value":  float(order.product.weight),
-				"unit": "g"
-				},
-				"sku": order.product.sku
+				"value":  float( self.sub_total_price(order) ), # total price (unit price * quantity)
+				"currency": order.product.price_currency,
+				"weight": self.customs_weight(float(order.product.weight)), # in oz
+				"hs_tariff_number":None,
+				"code":order.product.sku,
+				"origin_country":order.product.origin,
 				},)
 		return data
+
+	''' Convert Grams to Ounces'''
+	def customs_weight(self,weight):
+		oz = weight * 1/28.34952313
+		return oz
+	''' calculate unit price and add the variant price '''
+	def unit_price(self,order):
+		if order.product:
+			price = order.product.usd_price
+			if order.with_option:
+				options = order.option_set.all()
+				for option in options:
+					price = price + option.usd_price
+		return price
+	''' calculate total order price price and add the quantity '''
+	def sub_total_price(self,order):
+		if order.product:
+			price = order.product.usd_price * order.quantity
+			if order.with_option:
+				options = order.option_set.all()
+				for option in options:
+					price = price + option.usd_price
+		return price
+
+	''' Basket Total weight in Grams '''
 	@property
 	def weight(self):
 		data = []
@@ -129,114 +152,35 @@ class Basket(models.Model):
 			weight = weight + order_weight
 		return weight
 
+	''' parcels for easypost api, we can Choose the parcels Box here '''
 	@property
 	def parcels(self):
 		data = []
 		if self.weight < 600:
-			data.append({
-				"description": "Food XS",
-				"box_type": "custom",
-				"weight": {
-					"value": 0.5,
-					"unit": "kg"
-					},
-				"dimension": {
-				"width": 35,
-				"height": 27.5,
-				"depth": 1,
-				"unit": "cm"
-				},
-				"items": self.items
-				},)
-			return data
-
+			parcel= { "weight": self.customs_weight( float(self.weight) ),"width": 35,"length": 1,"height": 27.5 }
+			return parcel
 		if self.weight < 1000:
-			data.append({
-				"description": "Food XS",
-				"box_type": "custom",
-				"weight": {
-					"value": 1 ,
-					"unit": "kg"
-					},
-				"dimension": {
-				"width": 18.2,
-				"height": 33.7,
-				"depth": 10,
-				"unit": "cm"
-				},
-				"items": self.items
-				},)
-			return data
-
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "width": 18.2, "height": 33.7, "length": 10 }
+			return parcel
 		if self.weight < 2000:
-			data.append({
-				"description": "Food XS",
-				"box_type": "custom",
-				"weight": {
-					"value": 2,
-					"unit": "kg"
-					},
-				"dimension": {
-				"width": 32.2,
-				"height": 33.7,
-				"depth": 10,
-				"unit": "cm"
-				},
-				"items": self.items
-				},)
-			return data
-
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "width": 32.2, "height": 33.7, "length": 10 }
+			return parcel
 		if self.weight < 5000:
-			data.append({
-				"description": "Food XS",
-				"box_type": "custom",
-				"weight": {
-					"value": 5,
-					"unit": "kg"
-					},
-				"dimension": {
-				"width": 32.2,
-				"height": 33.7,
-				"depth": 18,
-				"unit": "cm"
-				},
-				"items": self.items
-				},)
-			return data
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "width": 32.2, "height": 33.7, "length": 18 }
+			return parcel
 		if self.weight < 10000:
-			data.append({
-				"description": "Food XS",
-				"box_type": "custom",
-				"weight": {
-					"value": 10,
-					"unit": "kg"
-					},
-				"dimension": {
-				"width": 32.2,
-				"height": 33.7,
-				"depth": 34.5,
-				"unit": "cm"
-				},
-				"items": self.items
-				},)
-			return data
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "width": 32.2, "height": 33.7, "length": 34.5 }
+			return parcel
 		if self.weight < 20000:
-			data.append({
-				"description": "Food XS",
-				"box_type": "custom",
-				"weight": {
-					"value": 20,
-					"unit": "kg"
-					},
-				"dimension": {
-				"width": 40.4,
-				"height": 48.1,
-				"depth": 38.9,
-				"unit": "cm"
-				},
-				"items": self.items
-				},)
-			return data
+			parcel= { "weight":self.customs_weight( float(self.weight) ), "width": 40.4, "height": 48.1, "length": 38.9 }
+			return parcel
+
+	''' Change the Basket price to zero before start calculation '''
+	def zero_fill_currency(self):
+		self.usd   = 0
+		self.save()
+		return
+	''' Get orders List and calculate the total price '''
 	@property
 	def get_orders(self):
 		orders = self.order_set.all().filter(status=False)
@@ -256,7 +200,7 @@ class Basket(models.Model):
 						options.append({
 							'name': str(o.name),
 							'value': str(o.value),
-							'price': str(o.price),
+							'price': str(o.usd_price),
 							})
 
 				data.append({
@@ -267,9 +211,10 @@ class Basket(models.Model):
 					'main_image': order.product.image,
 					'name':order.product.name,
 					'quantity':order.quantity,
-					'total_price':self.get_price(order),
+					'total_price':self.sub_total_price(order),# total price (unit price * quantity)
 					'price': self.unit_price(order),
-					'price_currency': order.product.price_currency,
+					'price_currency': 'USD',
+					#'price_currency': order.product.price_currency,
 					'classification':'product',
 					'descent':descent,
 					'max_value': order.max_quantity,
@@ -278,60 +223,35 @@ class Basket(models.Model):
 					},
 					'options':options,
 					})
-				self.calculat(currency = order.product.price_currency , price = order.product.price ,order = order )
+				self.total_price(currency = "USD" , price = order.product.usd_price , order = order )
 		return data
 
-
-	def unit_price(self,order):
-		if order.product:
-			price = order.product.price
-			if order.with_option:
-				options = order.option_set.all()
-				for option in options:
-					price = price + option.price
-		return price
-
-	def get_price(self,order):
-		if order.product:
-			price = order.product.price * order.quantity
-			if order.with_option:
-				options = order.option_set.all()
-				for option in options:
-					price = price + option.price
-		return price
-
-	def calculat(self,currency,price, order):
-
+	''' Basket Total Price '''
+	def total_price(self,currency,price, order):
 		quantity = order.quantity
 		coupon   = order.coupon
-		total = price * quantity
-
+		total    = price * quantity
 		if coupon:
 			after_discount = total - (total/100 * coupon.rate )
 		else:
 			after_discount = total
-			
 		final = after_discount
-
 		if currency == "USD":
 			total = price * quantity
 			self.usd = self.usd + final
-		
 		if order.with_option:
 			options = order.option_set.all()
 			for option in options:
-				self.usd = self.usd + option.price
+				self.usd = self.usd + option.usd_price
 		self.save()
 		return 
 
+'''
 	def get_currency(self):
 		currency = self.order.product.price_currency
 		return currency
+'''
 
-	def zero_fill_currency(self):
-		self.usd   = 0
-		self.save()
-		return
 
 
 

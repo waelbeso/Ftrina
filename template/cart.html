@@ -74,7 +74,7 @@
                   <td class="unit">{{o.product.price}} {{o.product.price_currency}}</td>
                   <td class="sub">{{o.product.total_price}}</td>
                   <td class="action text-center">
-                     <button type="submit" data-toggle="tooltip" data-placement="top" data-original-title="Update" class="btn"> <i class="fa fa-refresh"> </i></button>
+                     <button type="submit" data-toggle="tooltip" data-placement="top" data-original-title="Update" class="btn text-danger ftrina-btn"> <i class="fa fa-refresh"> </i></button>
                   </form>
                     <a href="{% url 'remove_from_cart' order=o.order_id %}" class="text-danger" data-toggle="tooltip" data-placement="top" data-original-title="Remove"><i class="fa fa-trash-o"></i></a>
                   </td>

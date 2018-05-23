@@ -295,6 +295,82 @@ def shipping_settings(request):
 				},)
 			return data
 
+
+
+
+
+	#from zeep import Client
+	#WebAuthenticationDetail = [ {'UserCredential':[{ "Key":"tnIkKEydGiS0IKls","Password":"759Q1CJUN1tUh5qm2yOrRUbjb"}],'ParentCredential':[{ "Key":"tnIkKEydGiS0IKls","Password":"759Q1CJUN1tUh5qm2yOrRUbjb"}] }]
+	#WebAuthenticationDetail.append(  } )
+	#ClientDetail=[]
+	#TransactionDetail=[{'CustomerTransactionId':' *** Ftrina.com Request ***'}]
+	#Version=[{'ServiceId':'crs','Major':'22','Intermediate':'0','Minor':'0'}]
+	#ClientDetail.append( {'AccountNumber':'510087720','MeterNumber':'119039998'} )
+	#ReturnTransitAndCommit = True
+	
+	#client = Client('/Users/waelel-begearmi/Downloads/RateService/RateService_v22.wsdl')
+	#node = client.create_message(client.service, 'getRates', WebAuthenticationDetail=WebAuthenticationDetail, ClientDetail=ClientDetail,TransactionDetail=TransactionDetail,Version=Version,ReturnTransitAndCommit=ReturnTransitAndCommit  )
+	#print 
+	#client = Client('/Users/waelel-begearmi/Downloads/aramex-rates-calculator-wsdl.wsdl')
+	
+	#response = client.service
+	#print response.getRates()
+	#print dir(response)
+
+
+	context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'data':user_checkout, 'form': form }
+	return render(request,template,context)
+
+	url = 'https://sandbox-api.postmen.com/v3/rates'
+	postmen_api_key = getattr(settings, "POSTMEN_API_KEY", None)
+	headers = {
+	'postmen-api-key': postmen_api_key,
+	'content-type': 'application/json'
+	}
+	payload = {
+	"async": False,
+	"shipper_accounts": shipper_accounts,
+	"is_document": False,
+	}
+
+	data = payload
+	data['shipment'] = {
+	"ship_from" : first_warehouse.ship_from,
+	"ship_to" : user_checkout.ship_to,
+	"parcels":request.basket.parcels,
+	}
+	#print payload
+	#print data
+	response = requests.request('POST', url, data=json.JSONEncoder().encode(data), headers=headers)
+
+	reply = response.json()
+	print "--------------reply--------------------\n"
+	print reply
+	print "\n--------------reply--------------------"
+
+	if not  reply['data']['rates'] is None:
+		print reply['data']['rates'][0]['info_message']
+		if not  reply['data']['rates'][0]['info_message'] == 'No rate quotes returned from carrier.':
+			rates = reply['data']['rates']
+			for o in rates:
+				choices = []
+				#print reply['data']['rates']
+
+				name  = str(o['service_name']) + ' ' +  str(o['total_charge']['amount']) + ' ' + str(o['total_charge']['currency'])
+				value = str(o['shipper_account']['id'])  + '@' + str(o['service_type'])  + '@' +   str(o['total_charge']['amount']) + '@' + str(o['total_charge']['currency'])  + '@' + str(o['service_name'])  
+				choices.append( ( value  , name  ) )
+
+				form.fields["shipping"].choices = choices
+				#print form.fields["shipping"].choices
+				context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'data':user_checkout, 'rates':rates, 'form': form }
+				return render(request,template,context)
+		else:
+			error = 'No rate quotes returned from carrier.'
+			context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'data':user_checkout, 'form': form,'error':error }
+			return render(request,template,context)
+	else:
+		context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'data':user_checkout, 'form': form }
+		return render(request,template,context)
 '''
 
 

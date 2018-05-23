@@ -24,6 +24,8 @@ from django.forms.utils  import ErrorList
 import cloudinary
 import requests
 from ftrina.countries import COURIER_LIST
+from django.conf import settings
+
 
 @vendor_required
 def dashboard(request):
@@ -160,6 +162,19 @@ def products_edit(request,product):
 			target_product.characteristics = variant_data
 			target_product.save()
 
+			if not shop.currency == "USD":
+				fixer_api_key = getattr(settings, "FIXER_API_KEY", None)
+				amount = float(target_product.price) / 100 * 0.5 + float(target_product.price)
+				url = 'http://data.fixer.io/api/convert?access_key=' + fixer_api_key + '&from=' + str(shop.currency) + '&to=USD&amount=' + str(amount)
+				fixer_response = requests.request('GET', url)
+				json_response = json.loads(fixer_response.text)
+				target_product.usd_price = json_response['result']
+				target_product.save()
+			else:
+				target_product.usd_price = target_product.price
+				target_product.save()
+
+
 			clear_variant =  target_product.variant_set.all()
 			for o in clear_variant:
 				o.delete()
@@ -175,6 +190,7 @@ def products_edit(request,product):
 								name = o['name'],
 								value = obj,
 								price = 0,
+								usd_price = 0,
 								)
 							new_variant.save()
 			if photo_container:
@@ -248,7 +264,17 @@ def products_add(request):
 				characteristics = variant_data,
 				)
 			new_product.save()
-
+			if not shop.currency == "USD":
+				fixer_api_key = getattr(settings, "FIXER_API_KEY", None)
+				amount = float(new_product.price) / 100 * 0.5 + float(new_product.price)
+				url = 'http://data.fixer.io/api/convert?access_key=' + fixer_api_key + '&from=' + str(shop.currency) + '&to=USD&amount=' + str(amount)
+				fixer_response = requests.request('GET', url)
+				json_response = json.loads(fixer_response.text)
+				new_product.usd_price = int(json_response['result'])
+				new_product.save()
+			else:
+				new_product.usd_price = new_product.price
+				new_product.save()
 
 			if variant_selection:
 				for o in variant_selection:
@@ -259,6 +285,7 @@ def products_add(request):
 								name = o['name'],
 								value = obj,
 								price = 0,
+								usd_price = 0,
 								)
 							new_variant.save()
 			if photo_container:
@@ -309,6 +336,7 @@ def products_duplicate(request,product):
 		language = 'English',
 		with_variant = target_product.with_variant,
 		characteristics = target_product.characteristics,
+		usd_price = target_product.usd_price,
 		)
 	new_product.save()
 
@@ -319,6 +347,7 @@ def products_duplicate(request,product):
 				name = o.name,
 				value = o.value,
 				price = o.price,
+				usd_price = o.usd_price,
 				)
 			new_variant.save()
 	return redirect('/dashboard/products/edit/' + str(new_product.id) + '/' )
@@ -487,6 +516,15 @@ def variant_edit(request,variant):
 		form = variantForm(request.POST)
 		if form.is_valid():
 			target_variant.price = form.cleaned_data['price']
+			if not shop.currency == "USD":
+				fixer_api_key = getattr(settings, "FIXER_API_KEY", None)
+				amount = float(form.cleaned_data['price']) / 100 * 0.5 + float(form.cleaned_data['price'])
+				url = 'http://data.fixer.io/api/convert?access_key=' + fixer_api_key + '&from=' + str(shop.currency) + '&to=USD&amount=' + str(amount)
+				fixer_response = requests.request('GET', url)
+				json_response = json.loads(fixer_response.text)
+				target_variant.usd_price = json_response['result']
+			else:
+				target_variant.usd_price = form.cleaned_data['price']
 			target_variant.save()
 			return redirect('/dashboard/products/variant/' + str(target_variant.product.id) )
 	p_link = 'active'

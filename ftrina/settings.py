@@ -54,7 +54,7 @@ SECRET_KEY = '^1opmtj)$fg^6nv*m)mz^cv!)$0pl!z1yqcx-8pr&kwss646db'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['180.162.116.237','localhost','192.168.1.2','0.0.0.0','192.168.1.2']
+ALLOWED_HOSTS = ['116.225.10.204','localhost','192.168.1.2','0.0.0.0','192.168.1.2']
 
 AUTH_USER_MODEL= 'profile.Profile'
 AUTH_PROFILE_MODULE = 'profile.Profile' 
@@ -404,6 +404,13 @@ stripe_keys = {
   'publishable_key': 'pk_test_x0kmyIyKrkw7FRD8jm6FBAUU'
 }
 
+'''
+stripe_keys = {
+  'secret_key': 'pk_live_nyVD9eMMm9ncchMLs8RNBVY6',
+  'publishable_key': 'sk_live_GcrNq2wi9wrwcuh8wsQWKL13'
+}
+'''
+
 stripe.api_key = stripe_keys['secret_key']
 stripe.publishable_key = stripe_keys['publishable_key']
 
@@ -412,16 +419,11 @@ stripe.publishable_key = stripe_keys['publishable_key']
 LOGIN_URL = '/login/'
 
 POSTMEN_API_KEY = '74382142-c43a-4586-b3c5-10e255356a8a'
-
-
-#EASYPOST_API_KEY = 'iZOaNAwGpITHo0w0X3HkdQ' #Production API Keys
-EASYPOST_API_KEY = 'Ob4vhxKyZaSQ5ATH3HGMBg' #Test API Keys
-
+EASYPOST_API_KEY = 'iZOaNAwGpITHo0w0X3HkdQ' #Production API Keys
+#EASYPOST_API_KEY = 'Ob4vhxKyZaSQ5ATH3HGMBg' #Test API Keys
 
 
 
-
-
-
+FIXER_API_KEY = '47ecea3c7780897742b186745e6558cb' #http://data.fixer.io/api/latest?access_key=7e0f7460e21abdb124f63684dbdffab4
 
 

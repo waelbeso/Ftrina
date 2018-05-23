@@ -194,7 +194,7 @@ def edit_address(request,id):
 			user_address.address  = form.cleaned_data['address']
 			user_address.save()
 			return redirect('/address/')
-		print form.errors
+		#print form.errors
 
 	context   = { 'loginForm': loginForm, 'subscribersForm': subscribersForm ,'searchForm':searchForm , 'form':form }
 	return render(request,template,context)	
@@ -303,6 +303,16 @@ def add_to_cart(request,product):
 	if request.method == 'POST':
 		form = addToCartForm(request.POST,product=product)
 		if form.is_valid():
+			''' We confirm if all the basket orders is from the same Shop, as we will need to make invoice soon  '''
+			if request.basket.order_set.all():
+				product_shop = product.shop.id
+				basket_shop  = request.basket.order_set.all().first().shop.id
+				if not product_shop == basket_shop:
+					error =  "We can not mix orders from different store at this time"
+					template     = 'cart.html'
+					context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'error':error}
+					return render(request,template,context)
+
 			if not request.user.is_authenticated:
 				order = request.basket.order_set.create(session=session,shop=shop,product=product,quantity=form.cleaned_data["quantity"],with_option=product.with_variant,coupon=None)
 			if request.user.is_authenticated:
@@ -317,6 +327,7 @@ def add_to_cart(request,product):
 							name  = o.name,
 							value = o.value,
 							price = o.price,
+							usd_price = o.usd_price
 							)
 						new_option.save()
 				warehouse = shop.warehouse_set.all()
@@ -481,7 +492,7 @@ def pay(request,checkout):
 	
 	user_checkout = Checkout.objects.get(pk= checkout)
 
-	total_price  = user_checkout.shipment_price + request.basket.usd
+	total_price  = user_checkout.rate + request.basket.usd
 	context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'key':key , 'form' :form, 'checkout': user_checkout, 'total_price': total_price } 
 
 	if user_checkout.status == True :
@@ -493,23 +504,53 @@ def pay(request,checkout):
 		form = PayForm(request.POST)
 
 		if form.is_valid():
-			customer = stripe.Customer.create(
-				email=user_checkout.email,
-				source=form.cleaned_data['stripeToken']
-				)
+			if request.user.is_authenticated:
+				user = request.user
+				if user.stripe_customer_id:
+					customer = stripe.Customer.retrieve(user.stripe_customer_id)
+					user_checkout.stripe_customer_id = user.stripe_customer_id
+					user_checkout.save()
+				else:
+					customer = stripe.Customer.create(
+						email=user_checkout.email,
+						source=form.cleaned_data['stripeToken']
+						)
+					user.stripe_customer_id = customer["id"]
+					user.save()
+					user_checkout.stripe_customer_id = user.stripe_customer_id
+					user_checkout.save()
+			else:
+				all_user_checkout = Checkout.objects.filter(email=user_checkout.email)
+				stripe_customer_id = None
+				for o in all_user_checkout:
+					if o.stripe_customer_id :
+						stripe_customer_id = o.stripe_customer_id
+				if stripe_customer_id:
+					customer_id = stripe_customer_id
+					customer = stripe.Customer.retrieve(customer_id)
+					user_checkout.stripe_customer_id = customer["id"]
+					user_checkout.save()
+				else:
+					customer = stripe.Customer.create(
+						email=user_checkout.email,
+						source=form.cleaned_data['stripeToken']
+						)
+					user_checkout.stripe_customer_id = customer["id"]
+					user_checkout.save()
+
 
 			if request.basket.usd > 0.50:
 				charge = stripe.Charge.create(
 					customer=customer.id,
-					amount=str(int(request.basket.usd)*100),
+					amount=str(int(total_price)*100),
 					currency='usd',
 					description='Ftrina Charge'
 					)
 
 			user_checkout.status = True
 			user_checkout.save()
+
 			shop    = Shop.objects.get(pk=request.basket.order_set.all().first().shop.id)
-			print "------------------->>>>>", shop
 			basket  = request.basket
 			orders  = basket.order_set.all()
 
@@ -518,8 +559,8 @@ def pay(request,checkout):
 			#print dir(invoice)
 
 			seller = Seller.objects.create(
-				first_name = shop.first_name,last_name = shop.last_name ,email = shop.email,
-				mobile = shop.mobile,address= shop.address,city=shop.city,zip_code=shop.zip_code,
+				first_name = shop.default_contact.first_name,last_name = shop.default_contact.last_name ,email = shop.default_contact.email,
+				mobile = shop.default_contact.mobile,address= shop.address,city=shop.city,zip_code=shop.zip_code,
 				country=shop.country,province = shop.province)
 			seller.save()
 			buyer = Buyer.objects.create(
@@ -618,7 +659,7 @@ def checkout(request):
 				new_checkout.save()
 				return redirect('/checkout/delivery/' + str(new_checkout.id) + '/' )
 			else:
-				print form.errors
+				#print form.errors
 				return render(request,template,context)
 
 		if request.user.is_authenticated:
@@ -650,8 +691,8 @@ def checkout(request):
 				#request.checkout = new_checkout
 				return redirect('/checkout/delivery/' + str(new_checkout.id) + '/' )
 			else:
-				print form.errors
-				print form.data
+				#print form.errors
+				#print form.data
 				return render(request,template,context)
 	return render(request,template,context)
 
@@ -666,20 +707,13 @@ def checkout_shipping(request,checkout):
 	if request.method == 'POST':
 		if request.POST.get('shipping'):
 			user_choices   = request.POST.get('shipping').split("@")
-			print "0- ", user_choices[0]
-			print "1- ", user_choices[1]
-			print "2- ", user_choices[2]
-			print "3- ", user_choices[3]
-			print "3- ", user_choices[4]
-			user_checkout.shipper_account         = user_choices[0]
-			user_checkout.service_type            = user_choices[1]
-			user_checkout.shipment_price          = user_choices[2]
-			user_checkout.shipment_price_currency = user_choices[3]
-			user_checkout.service_name            = user_choices[4]
+			user_checkout.carrier_account_id = user_choices[0]
+			user_checkout.rate_id            = user_choices[1]
+			user_checkout.rate               = user_choices[2]
+			user_checkout.currency           = user_choices[3]
+			user_checkout.carrier            = user_choices[4]
 			user_checkout.save()
 			return redirect('/cart/pay/' + str(user_checkout.id) + '/' )
-
-
 	order_list       =  request.basket.order_set.all()
 	shipper_accounts =  []
 	first_warehouse  = request.basket.order_set.all().first().warehouse.all().first()
@@ -696,95 +730,45 @@ def checkout_shipping(request,checkout):
 	import easypost
 	from django.conf import settings
 	easypost.api_key = getattr(settings, "EASYPOST_API_KEY", None)
-	print easypost.api_key
+	#print easypost.api_key
+
+	customs_info = easypost.CustomsInfo.create(
+		eel_pfc='NOEEI 30.37(a)', # If the value of the goods is less than $2,500, then you pass the following EEL code: "NOEEI 30.37(a)"
+		contents_type='merchandise',
+		contents_explanation='',
+		customs_certify=True,
+		customs_signer='Ftrina Limited',
+		non_delivery_option='abandon',
+		restriction_type='none',
+		restriction_comments='',
+		customs_items=request.basket.customs_item
+		)
+	user_checkout.customs_info = customs_info.id
+	user_checkout.save()
 
 	shipment = easypost.Shipment.create(
 		to_address=user_checkout.ship_to,
 		from_address=first_warehouse.ship_from,
-		parcel={
-		"length": 20.2,
-		"width": 10.9,
-		"height": 5,
-		"weight": 65.9
-		},
+		parcel=request.basket.parcels,
+		customs_info = customs_info
 		)
-	print shipment
-	shipment.get_rates()
 
-	#from zeep import Client
-	#WebAuthenticationDetail = [ {'UserCredential':[{ "Key":"tnIkKEydGiS0IKls","Password":"759Q1CJUN1tUh5qm2yOrRUbjb"}],'ParentCredential':[{ "Key":"tnIkKEydGiS0IKls","Password":"759Q1CJUN1tUh5qm2yOrRUbjb"}] }]
-	#WebAuthenticationDetail.append(  } )
-	#ClientDetail=[]
-	#TransactionDetail=[{'CustomerTransactionId':' *** Ftrina.com Request ***'}]
-	#Version=[{'ServiceId':'crs','Major':'22','Intermediate':'0','Minor':'0'}]
-	#ClientDetail.append( {'AccountNumber':'510087720','MeterNumber':'119039998'} )
-	#ReturnTransitAndCommit = True
-	
-	#client = Client('/Users/waelel-begearmi/Downloads/RateService/RateService_v22.wsdl')
-	#node = client.create_message(client.service, 'getRates', WebAuthenticationDetail=WebAuthenticationDetail, ClientDetail=ClientDetail,TransactionDetail=TransactionDetail,Version=Version,ReturnTransitAndCommit=ReturnTransitAndCommit  )
-	#print 
-	#client = Client('/Users/waelel-begearmi/Downloads/aramex-rates-calculator-wsdl.wsdl')
-	
-	#response = client.service
-	#print response.getRates()
-	#print dir(response)
-
-
-	context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'data':user_checkout, 'form': form }
+	response = shipment.get_rates()
+	#print response.rates
+	rates = response.rates
+	choices = []
+	fixer_api_key = getattr(settings, "FIXER_API_KEY", None)
+	for rate in rates:
+		amount = float(rate['rate']) / 100 * 0.5 + float(rate['rate'])
+		url = 'http://data.fixer.io/api/convert?access_key=' + fixer_api_key + '&from=' + str(rate['currency']) + '&to=USD&amount=' + str(amount)
+		fixer_response = requests.request('GET', url)
+		json_response = json.loads(fixer_response.text)
+		name  = str(rate['carrier']) + ' ' +  str( int(json_response['result']) ) + ' ' + 'USD' 
+		value = str(rate['carrier_account_id'])  + '@' + str(rate['id'])  + '@' +   str( int(json_response['result']) ) + '@' +  'USD'  + '@' + str(rate['carrier'])  
+		choices.append( ( value  , name  ) )
+	form.fields["shipping"].choices = choices
+	context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'data':user_checkout, 'rates':rates, 'form': form }
 	return render(request,template,context)
-
-	url = 'https://sandbox-api.postmen.com/v3/rates'
-	postmen_api_key = getattr(settings, "POSTMEN_API_KEY", None)
-	headers = {
-	'postmen-api-key': postmen_api_key,
-	'content-type': 'application/json'
-	}
-	payload = {
-	"async": False,
-	"shipper_accounts": shipper_accounts,
-	"is_document": False,
-	}
-
-	data = payload
-	data['shipment'] = {
-	"ship_from" : first_warehouse.ship_from,
-	"ship_to" : user_checkout.ship_to,
-	"parcels":request.basket.parcels,
-	}
-	#print payload
-	#print data
-	response = requests.request('POST', url, data=json.JSONEncoder().encode(data), headers=headers)
-
-	reply = response.json()
-	print "--------------reply--------------------\n"
-	print reply
-	print "\n--------------reply--------------------"
-
-	if not  reply['data']['rates'] is None:
-		print reply['data']['rates'][0]['info_message']
-		if not  reply['data']['rates'][0]['info_message'] == 'No rate quotes returned from carrier.':
-			rates = reply['data']['rates']
-			for o in rates:
-				choices = []
-				#print reply['data']['rates']
-
-				name  = str(o['service_name']) + ' ' +  str(o['total_charge']['amount']) + ' ' + str(o['total_charge']['currency'])
-				value = str(o['shipper_account']['id'])  + '@' + str(o['service_type'])  + '@' +   str(o['total_charge']['amount']) + '@' + str(o['total_charge']['currency'])  + '@' + str(o['service_name'])  
-				choices.append( ( value  , name  ) )
-
-				form.fields["shipping"].choices = choices
-				#print form.fields["shipping"].choices
-				context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'data':user_checkout, 'rates':rates, 'form': form }
-				return render(request,template,context)
-		else:
-			error = 'No rate quotes returned from carrier.'
-			context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'data':user_checkout, 'form': form,'error':error }
-			return render(request,template,context)
-	else:
-		context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'data':user_checkout, 'form': form }
-		return render(request,template,context)
-
-	
 
 from datetime import date
 from haystack.generic_views import SearchView
@@ -952,7 +936,7 @@ def registerView(request):
 		form = RegisterForm(request.POST)
 		if form.is_valid():
 			
-			print form.cleaned_data['phone']
+			#print form.cleaned_data['phone']
 			user = User.objects.create_user(username=form.cleaned_data['username'],  email = form.cleaned_data['email'],  password = form.cleaned_data['password'], mobile = form.cleaned_data['phone'] )
 			user.save()
 			from email_confirmation.tasks  import  confirm_user_email_task
@@ -960,7 +944,7 @@ def registerView(request):
 			template = 'register_done.html'
 			return render(request,template,context)
 		else:
-			print form.errors
+			#print form.errors
 			registerForm=RegisterForm(request.POST)
 			context = { 'registerForm': registerForm, 'loginForm': loginForm , 'subscribersForm': subscribersForm,'searchForm':searchForm }
 			return render(request,template,context)
@@ -982,7 +966,7 @@ def register_confirms_view(request,code):
 	loginForm=LoginForm()
 	subscribersForm = SubscribersForm()
 	searchForm = SearchForm()
-	print code
+	#print code
 	context = { 'registerForm': registerForm, 'loginForm': loginForm , 'subscribersForm': subscribersForm,'searchForm':searchForm }
 
 	try:
