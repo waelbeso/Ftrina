@@ -707,7 +707,8 @@ def checkout_shipping(request,checkout):
 	if request.method == 'POST':
 		if request.POST.get('shipping'):
 			user_choices   = request.POST.get('shipping').split("@")
-			user_checkout.carrier_account_id = user_choices[0]
+			#user_checkout.carrier_account_id = user_choices[0]
+			user_checkout.shipment_id        = user_choices[0]
 			user_checkout.rate_id            = user_choices[1]
 			user_checkout.rate               = user_choices[2]
 			user_checkout.currency           = user_choices[3]
@@ -750,11 +751,13 @@ def checkout_shipping(request,checkout):
 		to_address=user_checkout.ship_to,
 		from_address=first_warehouse.ship_from,
 		parcel=request.basket.parcels,
-		customs_info = customs_info
+		customs_info = customs_info,
+		carrier_accounts = shipper_accounts
 		)
 
 	response = shipment.get_rates()
 	#print response.rates
+	print shipment.id
 	rates = response.rates
 	choices = []
 	fixer_api_key = getattr(settings, "FIXER_API_KEY", None)
@@ -764,7 +767,7 @@ def checkout_shipping(request,checkout):
 		fixer_response = requests.request('GET', url)
 		json_response = json.loads(fixer_response.text)
 		name  = str(rate['carrier']) + ' ' +  str( int(json_response['result']) ) + ' ' + 'USD' 
-		value = str(rate['carrier_account_id'])  + '@' + str(rate['id'])  + '@' +   str( int(json_response['result']) ) + '@' +  'USD'  + '@' + str(rate['carrier'])  
+		value = str(shipment.id)  + '@' + str(rate['id'])  + '@' +   str( int(json_response['result']) ) + '@' +  'USD'  + '@' + str(rate['carrier'])  
 		choices.append( ( value  , name  ) )
 	form.fields["shipping"].choices = choices
 	context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'data':user_checkout, 'rates':rates, 'form': form }

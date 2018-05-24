@@ -60,7 +60,7 @@ class Checkout(models.Model):
 
 	customs_info    = models.CharField(max_length=255, blank=True, null=True)
 
-	carrier_account_id = models.CharField(max_length=255, blank=True, null=True)
+	shipment_id        = models.CharField(max_length=255, blank=True, null=True)
 	rate_id            = models.CharField(max_length=255, blank=True, null=True)
 	currency           = models.CharField(max_length=255, blank=True, null=True)
 	rate               = models.DecimalField(null=True,blank=True, max_digits=19, decimal_places=2,default=0.00)
