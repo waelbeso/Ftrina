@@ -157,22 +157,51 @@ class Basket(models.Model):
 	def parcels(self):
 		data = []
 		if self.weight < 600:
-			parcel= { "weight": self.customs_weight( float(self.weight) ),"width": 35,"length": 1,"height": 27.5 }
+			parcel= { "weight": self.customs_weight( float(self.weight) ),"length": 27 * 0.39,"width": 35 * 0.39 ,"height": 2 * 0.39  }      #Up to 0.5kg
 			return parcel
+
 		if self.weight < 1000:
-			parcel= { "weight": self.customs_weight( float(self.weight) ), "width": 18.2, "height": 33.7, "length": 10 }
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "length": 33 * 0.39 ,"width": 16 * 0.39 , "height": 10 * 0.39 }     #Up to 1kg Conferm
+
 			return parcel
+		if self.weight < 1500:
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "length": 34 * 0.39,  "width": 31 * 0.39, "height": 10 * 0.39 }     #Up to 1.5kg Conferm
+			return parcel
+
 		if self.weight < 2000:
-			parcel= { "weight": self.customs_weight( float(self.weight) ), "width": 32.2, "height": 33.7, "length": 10 }
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "length": 33 * 0.39 ,  "width": 33 * 0.39 , "height": 9.5 * 0.39  }  #Up to 2kg Conferm
 			return parcel
+
+		if self.weight < 3000:
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "length": 33 * 0.39  ,  "width": 33 * 0.39  , "height": 14 * 0.39 }   #Up to 3kg Conferm
+			return parcel
+
+		if self.weight < 4000:
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "length": 33 * 0.39   ,  "width": 33 * 0.39  , "height": 18.5 * 0.39 } #Up to 4kg Conferm
+			return parcel
+
 		if self.weight < 5000:
-			parcel= { "weight": self.customs_weight( float(self.weight) ), "width": 32.2, "height": 33.7, "length": 18 }
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "length": 35 * 0.39   ,  "width": 33 * 0.39  , "height": 22 * 0.39 } #Up to 5kg Conferm
 			return parcel
-		if self.weight < 10000:
-			parcel= { "weight": self.customs_weight( float(self.weight) ), "width": 32.2, "height": 33.7, "length": 34.5 }
+
+		if self.weight < 7000:
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "length": 34 * 0.39 ,  "width": 32 * 0.39, "height": 32.5 * 0.39 } #Up to 7kg Conferm
 			return parcel
-		if self.weight < 20000:
-			parcel= { "weight":self.customs_weight( float(self.weight) ), "width": 40.4, "height": 48.1, "length": 38.9 }
+
+		if self.weight < 12000:
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "length": 42 * 0.39 ,  "width": 36 * 0.39 , "height": 37 * 0.39 } #Up to 12kg Conferm
+			return parcel
+
+		if self.weight < 18000:
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "length": 45 * 0.39 ,  "width": 36 * 0.39 , "height": 37 * 0.39 } #Up to 18kg
+			return parcel
+
+		if self.weight < 25000:
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "length": 54.8 * 0.39 ,  "width": 42.1 * 0.39 , "height": 33.5 * 0.39  } #Up to 25kg
+			return parcel
+
+		if self.weight < 150000:
+			parcel= { "weight": self.customs_weight( float(self.weight) ), "length": 120 * 0.39 ,  "width": 80 * 0.39 , "height": 80 * 0.39  } #Up to 25kg
 			return parcel
 
 	''' Change the Basket price to zero before start calculation '''

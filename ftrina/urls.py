@@ -95,6 +95,8 @@ urlpatterns = [
     url(r'^dashboard/shipping/delete/(?P<account>[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12})/$',  vendor_view.shipping_delete , name='dashboard_shipping_delete'),
 
     url(r'^dashboard/shipping/labels/$', vendor_view.shipping_labels , name='dashboard_shipping_labels'),
+    url(r'^dashboard/shipping/labels/view/(?P<order>[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12})/$', vendor_view.order_label , name='dashboard_order_label'),
+    
     url(r'^dashboard/shipping/settings/$', vendor_view.shipping_settings , name='dashboard_shipping_settings'),
 
 

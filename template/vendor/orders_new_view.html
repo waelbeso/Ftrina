@@ -43,6 +43,7 @@
 												<br><br>
 												<strong>Issued Date:</strong> {{invoice.timestamp.date}}<br>
 												<strong>NO #:</strong> {{invoice.reference}} <br>
+												<strong>Tracking #:</strong> {{invoice.reference}} <br>
 											</div>
 										</div>
 									</div>
@@ -74,6 +75,8 @@
 											{%if invoice.paid %}
 											<button type="button" class="btn btn-success waves-effect waves-light">Paid</button>
 											{%endif %}
+											<a href="{%url 'dashboard_order_label' order=invoice.id %}" class="btn btn-success waves-effect waves-light">label</a>
+											
 											{%if not invoice.paid %}
 											<button type="button" class="btn btn-danger waves-effect waves-light">Un Paid</button>
 											{%endif %}

@@ -25,7 +25,7 @@ import cloudinary
 import requests
 from ftrina.countries import COURIER_LIST
 from django.conf import settings
-
+import easypost
 
 @vendor_required
 def dashboard(request):
@@ -1055,6 +1055,34 @@ def orders_new_view(request,order):
 	template = 'vendor/orders_new_view.html'
 	context   = { 'o_n_link': o_n_link, 'invoice':target_invoice , 'orders':orders }
 	return render(request,template,context)
+
+@vendor_required
+def order_label(request,order):
+	target_invoice = Invoice.objects.get(pk=order)
+	shop = request.user.shop_set.get()
+	o_n_link = 'active'
+
+	if not target_invoice.shop.id == shop.id:
+		template = 'vendor/404.html'
+		context   = { 'o_n_link': o_n_link, 'shop':shop }
+		return render(request,template,context)
+
+	print target_invoice.shipment_id   
+	print target_invoice.rate_id
+
+	easypost.api_key = getattr(settings, "EASYPOST_API_KEY", None)
+	shipment = easypost.Shipment.retrieve(target_invoice.shipment_id)
+	print shipment
+	shipment.buy(rate={'id': target_invoice.rate_id}  )
+
+	print shipment
+	#print shipment.tracking_code
+
+
+	template = 'vendor/orders_new_view.html'
+	context   = { 'o_n_link': o_n_link, 'invoice':target_invoice }
+	return render(request,template,context)
+
 
 @vendor_required
 def orders_new(request):

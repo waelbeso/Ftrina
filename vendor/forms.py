@@ -178,7 +178,7 @@ class ProductForm(forms.Form):
 	description      = forms.CharField(required=True,widget=forms.Textarea(attrs={'type':'textarea','rows':'3' ,'placeholder': 'Description', 'class':'form-control email-body load-ckeditor ', 'id':'descriptionInput'}))
 
 	price            = forms.FloatField(required=True, min_value=1, widget=forms.NumberInput(attrs={'placeholder':'Price', 'class':'form-control', 'id':'priceInput' }))
-	weight           = forms.FloatField(required=True, max_value=20000, min_value=1, widget=forms.NumberInput(attrs={'placeholder':'Product Weight', 'class':'form-control', 'id':'weightInput' }))
+	weight           = forms.FloatField(required=True, max_value=149900, min_value=1, widget=forms.NumberInput(attrs={'placeholder':'Product Weight', 'class':'form-control', 'id':'weightInput' }))
 	origin           = forms.ChoiceField(label=_('Origin:'),choices=COUNTRIES_2, required=True, widget=forms.Select(attrs={ 'class':'form-control selectpicker', 'id':'originInput', 'data-live-search':'true','data-dropup-auto':'false'   }))
 	variant          = forms.CharField(required=False,widget=forms.HiddenInput(attrs={ 'class':'variant_container'}) )
 	photos           = forms.CharField(required=False,widget=forms.HiddenInput(attrs={ 'class':'photo_container'}) )

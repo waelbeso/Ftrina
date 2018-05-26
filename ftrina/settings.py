@@ -419,8 +419,8 @@ stripe.publishable_key = stripe_keys['publishable_key']
 LOGIN_URL = '/login/'
 
 POSTMEN_API_KEY = '74382142-c43a-4586-b3c5-10e255356a8a'
-EASYPOST_API_KEY = 'iZOaNAwGpITHo0w0X3HkdQ' #Production API Keys
-#EASYPOST_API_KEY = 'Ob4vhxKyZaSQ5ATH3HGMBg' #Test API Keys
+#EASYPOST_API_KEY = 'iZOaNAwGpITHo0w0X3HkdQ' #Production API Keys
+EASYPOST_API_KEY = 'Ob4vhxKyZaSQ5ATH3HGMBg' #Test API Keys
 
 
 

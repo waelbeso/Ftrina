@@ -564,16 +564,20 @@ class Coupon(models.Model):
 ''' the seller is different from the shop seller model '''
 from basket.models import Buyer,Seller
 class Invoice(models.Model):
-	id           = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-	paid         = models.BooleanField(default=False) 
-	timestamp    = models.DateTimeField(default=timezone.now,auto_now=False,blank=True) # at witch time
-	buyer        = models.ForeignKey(Buyer,null=True,blank=True) # 
-	seller       = models.ForeignKey(Seller,null=True,blank=True) # 
-	shop         = models.ForeignKey("Shop", on_delete=models.CASCADE, null=True,blank=True)
-	owner        = models.ForeignKey(Profile,on_delete=models.CASCADE,null=True,blank=True)
-	finished     = models.BooleanField(default=False) # 
-	reference    = models.UUIDField(default=uuid.uuid4, editable=False) # reference to look for the Order and to print in the invoice
-	stage        = models.CharField(max_length=55,null=True,blank=True, default='pending') # pending - picked or reserved  - shipped - reserved
+	id            = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+	paid          = models.BooleanField(default=False) 
+	timestamp     = models.DateTimeField(default=timezone.now,auto_now=False,blank=True) # at witch time
+	buyer         = models.ForeignKey(Buyer,null=True,blank=True) # 
+	seller        = models.ForeignKey(Seller,null=True,blank=True) # 
+	shop          = models.ForeignKey("Shop", on_delete=models.CASCADE, null=True,blank=True)
+	owner         = models.ForeignKey(Profile,on_delete=models.CASCADE,null=True,blank=True)
+	finished      = models.BooleanField(default=False) # 
+	reference     = models.UUIDField(default=uuid.uuid4, editable=False) # reference to look for the Order and to print in the invoice
+	stage         = models.CharField(max_length=55,null=True,blank=True, default='pending') # pending - picked or reserved  - shipped - reserved
+	shipment_id   = models.CharField(max_length=255, blank=True, null=True)
+	rate_id       = models.CharField(max_length=255, blank=True, null=True)
+	#label_id      = models.CharField(max_length=255, blank=True, null=True)
+	#label_pdf_url = models.CharField(max_length=255, blank=True, null=True)
 
 	def __unicode__(self): 
 		return str(self.id)
@@ -672,10 +676,17 @@ class Inventory(models.Model):
 		return self.product.name
 
 
-
-
-
-
+class Label(models.Model):
+	id            = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+	shop          = models.ForeignKey(Shop,on_delete=models.CASCADE,) # From which shop
+	created_at    = models.DateTimeField(auto_now=True,blank=True) # at witch time
+	label_url     = models.URLField(null=True,blank=True) # label_url
+	easypost_id   = models.CharField(max_length=255, blank=True, null=True)
+	invoice       = models.ForeignKey(Invoice,null=True,blank=True) # in witch invoice
+	carrier       = models.CharField(max_length=255, blank=True, null=True)
+	tracking_code = models.CharField(max_length=255, blank=True, null=True)
+	def __unicode__(self): 
+		return self.abel_url
 
 
 

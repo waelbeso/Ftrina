@@ -312,7 +312,15 @@ def add_to_cart(request,product):
 					template     = 'cart.html'
 					context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'error':error}
 					return render(request,template,context)
-
+			''' We confirm the basket weight in lower than 150000 Gram  '''
+			if request.basket.order_set.all():
+				basket_weight = request.basket.weight
+				order_weight  = product.weight * form.cleaned_data["quantity"]
+				if basket_weight + order_weight  >  150000 :
+					error =  "You have reached the maximum possible weight for this order"
+					template     = 'cart.html'
+					context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'error':error}
+					return render(request,template,context)
 			if not request.user.is_authenticated:
 				order = request.basket.order_set.create(session=session,shop=shop,product=product,quantity=form.cleaned_data["quantity"],with_option=product.with_variant,coupon=None)
 			if request.user.is_authenticated:
@@ -375,7 +383,6 @@ def remove_from_cart(request,order):
 	order.delete()
 	return redirect('/cart/')
 def cart(request):
-
 	loginForm=LoginForm()
 	subscribersForm = SubscribersForm()
 	searchForm = SearchForm()
@@ -389,6 +396,15 @@ def cart(request):
 		form = UpdateCartForm(request.POST)
 		if form.is_valid():
 			order = Order.objects.get(pk=form.cleaned_data['order'])
+			''' We confirm the basket weight in lower than 150000 Gram  '''
+			basket_weight = request.basket.weight
+			order_weight  = order.product.weight * form.cleaned_data["quantity"]
+			if basket_weight + order_weight  >  150000 :
+				error =  "You have reached the maximum possible weight for this order"
+				template     = 'cart.html'
+				context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm, 'error':error}
+				return render(request,template,context)
+
 			order.quantity =form.cleaned_data['quantity']
 			order.save()
 	return render(request,template,context)
@@ -572,6 +588,8 @@ def pay(request,checkout):
 			invoice.buyer  = buyer
 			invoice.seller = seller
 			invoice.shop   = shop
+			invoice.shipment_id = user_checkout.shipment_id
+			invoice.rate_id     = user_checkout.rate_id
 			invoice.save()
 			if request.user.is_authenticated:
 				invoice.owner = request.user
@@ -758,6 +776,7 @@ def checkout_shipping(request,checkout):
 	response = shipment.get_rates()
 	#print response.rates
 	print shipment.id
+	print shipment
 	rates = response.rates
 	choices = []
 	fixer_api_key = getattr(settings, "FIXER_API_KEY", None)
