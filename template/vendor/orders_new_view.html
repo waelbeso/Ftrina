@@ -43,7 +43,7 @@
 												<br><br>
 												<strong>Issued Date:</strong> {{invoice.timestamp.date}}<br>
 												<strong>NO #:</strong> {{invoice.reference}} <br>
-												<strong>Tracking #:</strong> {{invoice.reference}} <br>
+												 <!-- <strong>Tracking #:</strong> {{invoice.reference}} <br> -->
 											</div>
 										</div>
 									</div>
@@ -70,7 +70,7 @@
 											</address>
 										</div>
 										<div class="col-sm-4">
-											<h3 class="text-center">Payment Status</h3>
+											<h3 class="text-center">Shipping labels</h3>
 											<div class="text-center">
 											{%if invoice.paid %}
 											<button type="button" class="btn btn-success waves-effect waves-light">Paid</button>

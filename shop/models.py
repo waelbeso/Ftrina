@@ -576,6 +576,7 @@ class Invoice(models.Model):
 	stage         = models.CharField(max_length=55,null=True,blank=True, default='pending') # pending - picked or reserved  - shipped - reserved
 	shipment_id   = models.CharField(max_length=255, blank=True, null=True)
 	rate_id       = models.CharField(max_length=255, blank=True, null=True)
+	label_created = models.BooleanField(default=False) 
 	#label_id      = models.CharField(max_length=255, blank=True, null=True)
 	#label_pdf_url = models.CharField(max_length=255, blank=True, null=True)
 

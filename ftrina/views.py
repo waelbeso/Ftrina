@@ -70,7 +70,7 @@ from django.contrib.auth import get_user_model
 
 from shop.models import Customer,Shop
 from django.conf import settings
-
+import easypost
 User = get_user_model()
 
 
@@ -626,7 +626,6 @@ def pay(request,checkout):
 			''' send Notification to shop owner '''
 			#send_notification(to=str(order.shop.owner.username),title="New Order",message="You Have New Order")
 
-			#print request.basket.order_set.all()
 			request.basket_size = 0
 			template     = 'charge.html'
 			context      = { 'loginForm': loginForm, 'subscribersForm': subscribersForm,'searchForm':searchForm }
