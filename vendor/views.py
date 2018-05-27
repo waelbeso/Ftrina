@@ -1043,6 +1043,7 @@ def orders_new_edit(request,order):
 @vendor_required
 def orders_new_view(request,order):
 	target_invoice = Invoice.objects.get(pk=order)
+	
 	shop = request.user.shop_set.get()
 	o_n_link = 'active'
 
@@ -1051,9 +1052,12 @@ def orders_new_view(request,order):
 		context   = { 'o_n_link': o_n_link, 'shop':shop }
 		return render(request,template,context)
 	orders = target_invoice.order_set.all()
+	label = ''
+	if target_invoice.label_created:
+		label = target_invoice.label_set.get()
 
 	template = 'vendor/orders_new_view.html'
-	context   = { 'o_n_link': o_n_link, 'invoice':target_invoice , 'orders':orders }
+	context   = { 'o_n_link': o_n_link, 'invoice':target_invoice , 'orders':orders, 'label':label }
 	return render(request,template,context)
 
 @vendor_required
@@ -1062,26 +1066,32 @@ def order_label(request,order):
 	shop = request.user.shop_set.get()
 	o_n_link = 'active'
 
+
 	if not target_invoice.shop.id == shop.id:
 		template = 'vendor/404.html'
 		context   = { 'o_n_link': o_n_link, 'shop':shop }
 		return render(request,template,context)
 
-	print target_invoice.shipment_id   
-	print target_invoice.rate_id
-
-	easypost.api_key = getattr(settings, "EASYPOST_API_KEY", None)
-	shipment = easypost.Shipment.retrieve(target_invoice.shipment_id)
-	print shipment
-	shipment.buy(rate={'id': target_invoice.rate_id}  )
-
-	print shipment
-	#print shipment.tracking_code
-
-
-	template = 'vendor/orders_new_view.html'
-	context   = { 'o_n_link': o_n_link, 'invoice':target_invoice }
-	return render(request,template,context)
+	if not target_invoice.label_created:
+		easypost.api_key = getattr(settings, "EASYPOST_API_KEY", None)
+		shipment = easypost.Shipment.retrieve(target_invoice.shipment_id)
+		print shipment
+		shipment.buy(rate={'id': target_invoice.rate_id}  )
+		print shipment
+		target_invoice.label_set.create(
+			shop = shop ,
+			label_url = shipment.postage_label.label_url ,
+			easypost_id =shipment.postage_label.id,
+			carrier = shipment.selected_rate.carrier,
+			tracking_code = shipment.tracking_code,
+			public_url = shipment.tracker.public_url,
+			tracker_id = shipment.tracker.id,
+			)
+		target_invoice.label_created = True
+		target_invoice.commercial_invoice = shipment.forms[0].form_url
+		target_invoice.save()
+		''' Send email to the customer ''' 
+		return redirect(shipment.postage_label.label_url)
 
 
 @vendor_required
@@ -1480,10 +1490,11 @@ def shipping_labels(request):
 	template = 'vendor/shipping_labels.html'
 	Sh_l_link = 'active'
 	shop = request.user.shop_set.get()
+	labels = shop.label_set.all()
 	#print shop.invoice_set.all().count()
 	#print shop.invoice_set.all()
 	#print shop.invoice_set.filter(finished=False)
-	context   = { 'Sh_l_link': Sh_l_link, 'shop':shop }
+	context   = { 'Sh_l_link': Sh_l_link, 'shop':shop , 'labels':labels }
 	return render(request,template,context)
 
 @vendor_required

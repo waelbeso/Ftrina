@@ -47,18 +47,18 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <td>Product</td>
+                      <td>Reference</td>
                       <td>Date</td>
-                      <td class="text-right">Address</td>
+                      <td class="text-right">Tracking</td>
                       <td class="text-center">Status</td>
                     </tr>
                   </thead>
                   <tbody>
                     {%for o in orders %}
                     <tr>
-                      <td><a href="{{o.product.url}}">{{o.quantity}} {{o.product.name}}</a></td>
+                      <td><a href="{{o.product.url}}">{{o.reference}}</a></td>
                       <td>{{o.timestamp}}</td>
-                      <td class="text-right">{{o.checkout.address}}</td>
+                      <td class="text-right"><a href="{{o.label_set.get.public_url}}"> {{o.label_set.get.tracking_code}} </a></td>
                       <td class="text-center"><span class="label label-warning">{{o.stage}}</span></td>
                     </tr>
                     {%endfor%}

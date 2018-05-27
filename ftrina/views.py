@@ -104,7 +104,7 @@ def history(request):
 	loginForm=LoginForm()
 	searchForm = SearchForm()
 	subscribersForm = SubscribersForm()
-	order_list = request.user.order_set.all().reverse()
+	order_list = request.user.invoice_set.all().reverse()
 	paginator = Paginator(order_list, 10)
 
 	try:
@@ -113,7 +113,7 @@ def history(request):
 		orders = paginator.page(1)
 	except EmptyPage:
 		orders = paginator.page(paginator.num_pages)
-
+		
 	profile = request.user
 	context   = { 'loginForm': loginForm, 'subscribersForm': subscribersForm ,'searchForm':searchForm , 'profile':profile,'orders':orders }
 	return render(request,template,context)	

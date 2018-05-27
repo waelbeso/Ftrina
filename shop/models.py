@@ -576,7 +576,9 @@ class Invoice(models.Model):
 	stage         = models.CharField(max_length=55,null=True,blank=True, default='pending') # pending - picked or reserved  - shipped - reserved
 	shipment_id   = models.CharField(max_length=255, blank=True, null=True)
 	rate_id       = models.CharField(max_length=255, blank=True, null=True)
-	label_created = models.BooleanField(default=False) 
+	label_created = models.BooleanField(default=False)
+	
+	commercial_invoice = models.URLField(max_length=255, blank=True, null=True)
 	#label_id      = models.CharField(max_length=255, blank=True, null=True)
 	#label_pdf_url = models.CharField(max_length=255, blank=True, null=True)
 
@@ -686,8 +688,12 @@ class Label(models.Model):
 	invoice       = models.ForeignKey(Invoice,null=True,blank=True) # in witch invoice
 	carrier       = models.CharField(max_length=255, blank=True, null=True)
 	tracking_code = models.CharField(max_length=255, blank=True, null=True)
+
+	public_url = models.URLField(null=True,blank=True) # tracker_url
+	tracker_id = models.CharField(max_length=255, blank=True, null=True)
+
 	def __unicode__(self): 
-		return self.abel_url
+		return self.label_url
 
 
 
